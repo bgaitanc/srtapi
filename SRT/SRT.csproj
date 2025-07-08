@@ -17,4 +17,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SRT.Infraestructure\SRT.Infraestructure.csproj" />
+    </ItemGroup>
+
 </Project>
