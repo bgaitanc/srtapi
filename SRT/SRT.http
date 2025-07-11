@@ -1,6 +1,11 @@
 @SRT_HostAddress = http://localhost:5154
+@Auth = ''
+POST {{SRT_HostAddress}}/api/Authentication/login/
+Content-Type: application/json
 
-GET {{SRT_HostAddress}}/weatherforecast/
-Accept: application/json
+{
+  "user": "bgaitan",
+  "password": "12345"
+}
 
 ###

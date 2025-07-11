@@ -11,4 +11,9 @@
       <ProjectReference Include="..\SRT.Domain.Models\SRT.Domain.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.7" />
+    </ItemGroup>
+
 </Project>
