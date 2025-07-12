@@ -18,7 +18,7 @@ public class UserRepository : Repository<User>, IUserRepository
     public async Task<User?> GetUser(string username, string password)
     {
         // TODO Agregar transacciones (TransactionManager)
-        var sql = "SELECT * FROM Usuarios WHERE Usuario = @Username and Contrasena = @Password";
+        const string sql = "SELECT * FROM Usuarios WHERE Usuario = @Username and Contrasena = @Password";
         await using var connection = _srtConnection.GetConnection();
         var user = await connection.QuerySingleAsync<User>(sql, new { Username = username, Password = password });
         return user;
