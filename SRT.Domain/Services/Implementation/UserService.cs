@@ -16,6 +16,23 @@ public class UserService : IUserService
 
     public async Task<User?> Authenticate(AuthenticationRequest request)
     {
-        return await _userRepository.GetUser(request.User, request.Password);
+        return await _userRepository.GetUserByUserName(request.User);
+    }
+
+    public async Task<RegisterUserResponse> Register(RegisterUserRequest request)
+    {
+        // TODO: se debe validar datos requeridos, considerar fluent validations o
+        // el mapper nativo de los controladores ya puede controlar esto,
+        // verificar lenguaje de los mensajes
+        var users = await _userRepository.GetUserByUserNameAndEmail(request.Usuario, request.Correo);
+
+        if (users.Count == 0) return await _userRepository.RegisterUser(request);
+
+        if (users.Any(u => u.Usuario == request.Usuario))
+        {
+            throw new Exception("Usuario ya existe");
+        }
+
+        throw new Exception("Correo ya registrado");
     }
 }

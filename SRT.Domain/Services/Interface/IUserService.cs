@@ -6,4 +6,5 @@ namespace SRT.Domain.Services.Interface;
 public interface IUserService
 {
     Task<User?> Authenticate(AuthenticationRequest request);
+    Task<RegisterUserResponse> Register(RegisterUserRequest request);
 }

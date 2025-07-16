@@ -9,21 +9,15 @@ using SRT.Domain.Services.Interface;
 
 namespace SRT.Domain.Services.Implementation;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService(IUserService userService, IOptions<AppSettings> appSettings)
+    : IAuthenticationService
 {
-    private readonly IUserService _userService;
-    private readonly AppSettings _appSettings;
-
-    public AuthenticationService(IUserService userService, IOptions<AppSettings> appSettings)
-    {
-        _userService = userService;
-        _appSettings = appSettings.Value;
-    }
+    private readonly AppSettings _appSettings = appSettings.Value;
 
     public async Task<AuthenticationResponse?> GenerateToken(AuthenticationRequest request)
     {
-        var user = await _userService.Authenticate(request);
-        if (user is null)
+        var user = await userService.Authenticate(request);
+        if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Contrasena))
         {
             return null;
         }

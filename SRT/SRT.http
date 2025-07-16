@@ -1,11 +1,25 @@
-@SRT_HostAddress = http://localhost:5154
 @Auth = ''
+
+# @name api/Authentication/login/
 POST {{SRT_HostAddress}}/api/Authentication/login/
 Content-Type: application/json
 
 {
   "user": "bgaitan",
-  "password": "12345"
+  "password": "mortadela01"
 }
 
 ###
+
+# @name api/Users/register
+POST {{SRT_HostAddress}}/api/Users/register
+Content-Type: application/json
+
+{
+  "nombres": "Brian Antonio",
+  "apellidos": "Gaitán Corea",
+  "usuario": "bgaitan",
+  "contrasena": "mortadela01",
+  "correo": "test@hotmail.com",
+  "telefono": "12345678"
+}

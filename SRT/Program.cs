@@ -46,7 +46,7 @@ builder.Services.RegisterAppRepositories();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        b => b.WithOrigins("http://localhost:3000") // cambiar a la ruta del fe
+        b => b.WithOrigins("http://localhost:5173")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
