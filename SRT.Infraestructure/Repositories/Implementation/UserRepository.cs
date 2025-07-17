@@ -14,7 +14,7 @@ public class UserRepository(SrtConnection srtConnection) : Repository<User>, IUs
         // TODO Agregar transacciones (TransactionManager)
         const string sql = "SELECT * FROM Usuarios WHERE Usuario = @Username";
         await using var connection = srtConnection.GetConnection();
-        var user = await connection.QuerySingleAsync<User>(sql, new { Username = username });
+        var user = await connection.QuerySingleOrDefaultAsync<User>(sql, new { Username = username });
         return user;
     }
 
