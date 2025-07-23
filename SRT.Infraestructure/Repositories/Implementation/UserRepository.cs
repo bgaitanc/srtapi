@@ -18,12 +18,12 @@ public class UserRepository(SrtConnection srtConnection) : Repository<User>, IUs
         return user;
     }
 
-    public async Task<List<User>> GetUserByUserNameAndEmail(string username, string email)
+    public async Task<User?> GetUserByUserNameAndEmail(string username, string email)
     {
         const string sql = "SELECT * FROM Usuarios WHERE Usuario = @Username or Correo = @Correo";
         await using var connection = srtConnection.GetConnection();
-        var users = await connection.QueryAsync<User>(sql, new { Username = username, Correo = email });
-        return users.ToList();
+        var users = await connection.QuerySingleOrDefaultAsync<User>(sql, new { Username = username, Correo = email });
+        return users;
     }
 
     public async Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request)

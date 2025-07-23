@@ -10,10 +10,10 @@ CREATE TABLE Estados
     EstadoID          INT PRIMARY KEY IDENTITY (1,1),
     Estado            VARCHAR(100) NOT NULL,
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de pais
@@ -22,10 +22,10 @@ CREATE TABLE Pais
     PaisID            INT PRIMARY KEY IDENTITY (1,1),
     Pais              VARCHAR(100) NOT NULL,
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de departamentos
@@ -35,10 +35,10 @@ CREATE TABLE Departamentos
     PaisID            INT REFERENCES Pais (PaisID),
     Departamento      VARCHAR(100) NOT NULL,
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de locaciones
@@ -48,10 +48,10 @@ CREATE TABLE Locaciones
     DepartamentoID    INT REFERENCES Departamentos (DepartamentoID),
     Locacion          VARCHAR(255) NOT NULL,
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla Roles
@@ -60,10 +60,10 @@ CREATE TABLE Roles
     RolID             INT PRIMARY KEY IDENTITY (1,1),
     Rol               VARCHAR(255) NOT NULL,
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de usuarios
@@ -76,12 +76,21 @@ CREATE TABLE Usuarios
     Contrasena        VARCHAR(100),
     Correo            VARCHAR(255),
     Telefono          VARCHAR(25),
-    RolID             INT REFERENCES Roles (RolID),
     FechaCreacion     DATETIME     NOT NULL,
-    FechaModificacion DATETIME     NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT          NOT NULL
+    Activo            BIT DEFAULT 1
+);
+
+CREATE TABLE UsuarioRoles
+(
+    UsuarioRolID    INT PRIMARY KEY IDENTITY (1,1),
+    UsuarioID       INT FOREIGN KEY REFERENCES Usuarios (UsuarioID),
+    RolID           INT FOREIGN KEY REFERENCES Roles (RolID),
+    FechaAsignacion DATETIME DEFAULT GETDATE(),
+    CreadorID       INT,
+    Activo          BIT      DEFAULT 1
 );
 
 -- Tabla de vehículos
@@ -92,10 +101,10 @@ CREATE TABLE Vehiculos
     Modelo            NVARCHAR(100),
     Capacidad         INT,
     FechaCreacion     DATETIME NOT NULL,
-    FechaModificacion DATETIME NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT      NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de rutas
@@ -107,10 +116,10 @@ CREATE TABLE Rutas
     DistanciaKM       DECIMAL(18, 2),
     TiempoEstimado    TIME,
     FechaCreacion     DATETIME NOT NULL,
-    FechaModificacion DATETIME NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT      NOT NULL
+    Activo            BIT DEFAULT 1
 );
 
 -- Tabla de viajes
@@ -124,7 +133,7 @@ CREATE TABLE Viajes
     FechaHoraSalida   DATETIME,
     FechaHoraLlegada  DATETIME,
     FechaCreacion     DATETIME       NOT NULL,
-    FechaModificacion DATETIME       NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
     EstadoID          INT REFERENCES Estados (EstadoID)
@@ -138,7 +147,7 @@ CREATE TABLE Reservas
     ClienteID         INT FOREIGN KEY REFERENCES Usuarios (UsuarioID),
     FechaReserva      DATETIME,
     FechaCreacion     DATETIME NOT NULL,
-    FechaModificacion DATETIME NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
     EstadoID          INT REFERENCES Estados (EstadoID)
@@ -158,10 +167,10 @@ CREATE TABLE MetodosPago
     MetodoPagoID      INT PRIMARY KEY IDENTITY (1,1),
     MetodoPago        VARCHAR(50),
     FechaCreacion     DATETIME NOT NULL,
-    FechaModificacion DATETIME NOT NULL,
+    FechaModificacion DATETIME,
     CreadorID         INT,
     ModificadorID     INT,
-    Activo            BIT
+    Activo            BIT DEFAULT 1
 );
 
 -- Métodos de pago (opcional si es simple)
@@ -172,10 +181,10 @@ CREATE TABLE MetodosPagoUsuario
     UsuarioID           INT REFERENCES Usuarios (UsuarioID),
     Referencia          VARCHAR(50),
     FechaCreacion       DATETIME NOT NULL,
-    FechaModificacion   DATETIME NOT NULL,
+    FechaModificacion   DATETIME,
     CreadorID           INT,
     ModificadorID       INT,
-    Activo              BIT
+    Activo              BIT DEFAULT 1
 );
 
 -- Tabla de pagos
@@ -187,7 +196,7 @@ CREATE TABLE Pagos
     Monto               DECIMAL(10, 2),
     MetodoPagoUsuarioID INT REFERENCES MetodosPagoUsuario (MetodoPagoUsuarioID),
     FechaCreacion       DATETIME NOT NULL,
-    FechaModificacion   DATETIME NOT NULL,
+    FechaModificacion   DATETIME,
     CreadorID           INT,
     ModificadorID       INT,
     EstadoID            INT REFERENCES Estados (EstadoID)

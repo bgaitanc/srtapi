@@ -11,5 +11,4 @@ public class User : BaseEntity
     public string Contrasena { get; set; }
     public string Correo { get; set; }
     public string Telefono { get; set; }
-    public int RolId { get; set; }
 }
