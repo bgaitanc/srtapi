@@ -7,6 +7,6 @@ namespace SRT.Domain.Repositories.Interface;
 public interface IUserRepository: IRepository<User>
 {
     Task<User?> GetUserByUserName(string username);
-    Task<List<User>> GetUserByUserNameAndEmail(string requestUsuario, string requestCorreo);
+    Task<User?> GetUserByUserNameAndEmail(string requestUsuario, string requestCorreo);
     Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request);
 }   

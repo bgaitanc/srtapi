@@ -26,9 +26,9 @@ public class UserService : IUserService
         // verificar lenguaje de los mensajes
         var users = await _userRepository.GetUserByUserNameAndEmail(request.Usuario, request.Correo);
 
-        if (users.Count == 0) return await _userRepository.RegisterUser(request);
+        if (users is null) return await _userRepository.RegisterUser(request);
 
-        if (users.Any(u => u.Usuario == request.Usuario))
+        if (users.Usuario == request.Usuario)
         {
             throw new Exception("Usuario ya existe");
         }
