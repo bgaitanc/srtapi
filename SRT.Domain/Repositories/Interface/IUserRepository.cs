@@ -4,9 +4,9 @@ using SRT.Domain.Repositories.Interface.Base;
 
 namespace SRT.Domain.Repositories.Interface;
 
-public interface IUserRepository: IRepository<User>
+public interface IUserRepository : IRepository<User>
 {
     Task<User?> GetUserByUserName(string username);
     Task<User?> GetUserByUserNameAndEmail(string requestUsuario, string requestCorreo);
     Task<RegisterUserResponse> RegisterUser(RegisterUserRequest request);
-}   
+}

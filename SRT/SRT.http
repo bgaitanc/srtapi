@@ -1,13 +1,15 @@
-@Auth = ''
-
 # @name api/Authentication/login/
-POST {{SRT_HostAddress}}/api/Authentication/login/
+POST {{SRT_HostAddress}}/api/Authentication/login
 Content-Type: application/json
 
 {
   "user": "bgaitan",
   "password": "mortadela01"
 }
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
 
 ###
 
@@ -23,3 +25,13 @@ Content-Type: application/json
   "correo": "test@hotmail.com",
   "telefono": "12345678"
 }
+
+### 
+
+# @name api/Users/info
+GET {{SRT_HostAddress}}/api/Users/info
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+

@@ -16,7 +16,7 @@ public class AuthenticationService(IUserService userService, IOptions<AppSetting
 
     public async Task<AuthenticationResponse?> GenerateToken(AuthenticationRequest request)
     {
-        var user = await userService.Authenticate(request);
+        var user = await userService.GetUser(request.User);
         if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Contrasena))
         {
             return null;
@@ -32,12 +32,14 @@ public class AuthenticationService(IUserService userService, IOptions<AppSetting
             ]),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256Signature)
+                new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256Signature),
+            Issuer = _appSettings.Issuer,
+            Audience = _appSettings.Audience
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var tokenString = tokenHandler.WriteToken(token);
 
-        return new AuthenticationResponse(user, tokenString);
+        return new AuthenticationResponse(tokenString);
     }
 }
