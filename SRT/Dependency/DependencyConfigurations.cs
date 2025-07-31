@@ -4,19 +4,21 @@ using SRT.Domain.Services.Interface;
 using SRT.Infraestructure.Database;
 using SRT.Infraestructure.Repositories.Implementation;
 
-namespace SRT.Utils.Extensions;
+namespace SRT.Dependency;
 
-public static class BuilderServicesExtensions
+public static class DependencyConfigurations
 {
-    public static void RegisterAppServices(this IServiceCollection services)
+    public static void ConfigureAppServices(this IServiceCollection services)
     {
         services.AddScoped<SrtConnection>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IEstadoService, EstadoService>();
     }
 
-    public static void RegisterAppRepositories(this IServiceCollection services)
+    public static void ConfigureAppRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IEstadosRepository, EstadosRepository>();
     }
 }

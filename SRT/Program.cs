@@ -1,8 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SRT.Dependency;
 using SRT.Domain.Models.Helpers;
-using SRT.Utils.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +40,8 @@ builder.Services.AddAuthentication(options =>
     });
 
 //DI
-builder.Services.RegisterAppServices();
-builder.Services.RegisterAppRepositories();
+builder.Services.ConfigureAppServices();
+builder.Services.ConfigureAppRepositories();
 
 builder.Services.AddCors(options =>
 {

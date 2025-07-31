@@ -1,5 +1,6 @@
 ﻿using SRT.Domain.Entities;
 using SRT.Domain.Models.Dtos.Auth;
+using SRT.Domain.Models.Dtos.Users;
 using SRT.Domain.Repositories.Interface;
 using SRT.Domain.Services.Interface;
 
@@ -14,9 +15,15 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<User?> Authenticate(AuthenticationRequest request)
+    public async Task<User?> GetUser(string username)
     {
-        return await _userRepository.GetUserByUserName(request.User);
+        return await _userRepository.GetUserByUserName(username);
+    }
+    
+    public async Task<UserInfoResponse> GetUserInfo(string username)
+    {
+        var user = await GetUser(username);
+        return new UserInfoResponse(user!);
     }
 
     public async Task<RegisterUserResponse> Register(RegisterUserRequest request)

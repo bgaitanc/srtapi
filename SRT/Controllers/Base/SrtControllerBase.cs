@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SRT.Controllers.Base;
 
 public class SrtControllerBase : ControllerBase
 {
-    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action)
+    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action,
+        HttpStatusCode status = HttpStatusCode.OK)
     {
         try
         {
             var data = await action.Invoke();
-            return Ok(data);
+            return data is null ? NotFound() : GenerateActionResult(status, data);
         }
         catch (Exception e)
         {
@@ -17,7 +19,31 @@ public class SrtControllerBase : ControllerBase
         }
     }
 
-    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action, bool returnUnauthorizedOnNull)
+    private ActionResult GenerateActionResult<T>(HttpStatusCode status, T? data)
+    {
+        return status switch
+        {
+            HttpStatusCode.Created => Created("", data),
+            _ => Ok(data)
+        };
+    }
+
+    protected async Task<ActionResult> ExecuteServiceAsync(Func<Task> action)
+    {
+        try
+        {
+            await action.Invoke();
+
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action, bool returnUnauthorizedOnNull,
+        HttpStatusCode status = HttpStatusCode.OK)
     {
         try
         {
@@ -27,7 +53,7 @@ public class SrtControllerBase : ControllerBase
                 return Unauthorized("Credenciales inválidas");
             }
 
-            return Ok(data);
+            return GenerateActionResult(status, data);
         }
         catch (Exception e)
         {

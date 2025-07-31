@@ -3,18 +3,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace SRT.Infraestructure.Database;
 
-public class SrtConnection
+public class SrtConnection(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
-
-    public SrtConnection(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public SqlConnection GetConnection()
     {
-        var connectionString = _configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
         return new SqlConnection(connectionString);
     }
 }

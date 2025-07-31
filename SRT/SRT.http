@@ -1,7 +1,5 @@
-@Auth = ''
-
-# @name api/Authentication/login/
-POST {{SRT_HostAddress}}/api/Authentication/login/
+# @name api/authentication/login/
+POST {{SRT_HostAddress}}/api/Authentication/login
 Content-Type: application/json
 
 {
@@ -9,17 +7,79 @@ Content-Type: application/json
   "password": "mortadela01"
 }
 
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
 ###
 
-# @name api/Users/register
+# @name api/users/register
 POST {{SRT_HostAddress}}/api/Users/register
 Content-Type: application/json
 
 {
   "nombres": "Brian Antonio",
   "apellidos": "Gaitán Corea",
-  "usuario": "bgaitan",
-  "contrasena": "mortadela01",
-  "correo": "test@hotmail.com",
+  "usuario": "bgaitan2",
+  "contrasena": "mortadela02",
+  "correo": "test2@hotmail.com",
   "telefono": "12345678"
 }
+
+### 
+
+# @name api/users/info
+GET {{SRT_HostAddress}}/api/Users/info
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados
+GET {{SRT_HostAddress}}/api/estados?EstadoId=3
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/all
+GET {{SRT_HostAddress}}/api/estados/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/create
+POST {{SRT_HostAddress}}/api/estados/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "estadoName": "Completado"
+}
+
+###
+
+# @name api/estados/update
+PUT {{SRT_HostAddress}}/api/estados/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "estadoId": 1,
+  "estadoName": "Activo"
+}
+
+###
+
+# @name api/estados/{estadoId}/delete
+DELETE {{SRT_HostAddress}}/api/estados/3/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/{estadoId}/reactive
+PATCH {{SRT_HostAddress}}/api/estados/3/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
