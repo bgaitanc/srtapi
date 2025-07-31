@@ -46,7 +46,7 @@ builder.Services.RegisterAppRepositories();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        b => b.WithOrigins("http://localhost:5173")
+        b => b.WithOrigins("http://localhost:3000")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
