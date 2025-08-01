@@ -19,4 +19,14 @@ public static class SpConstants
     public const string DeleteOrReactiveEstado = "sp_Eliminar_O_Reactivar_Estado";
 
     #endregion
+
+    #region Paises
+
+    public const string GetAllPaises = "sp_Obtener_Paises";
+    public const string GetPaisByParams = "sp_Obtener_Pais_By_Params";
+    public const string InsertPais = "sp_Insertar_Pais";
+    public const string UpdatePais = "sp_Actualizar_Pais";
+    public const string DeleteOrReactivePais = "sp_Eliminar_O_Reactivar_Pais";
+
+    #endregion
 }

@@ -14,11 +14,13 @@ public static class DependencyConfigurations
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IEstadoService, EstadoService>();
+        services.AddScoped<IPaisService, PaisService>();
     }
 
     public static void ConfigureAppRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEstadosRepository, EstadosRepository>();
+        services.AddScoped<IPaisesRepository, PaisesRepository>();
     }
 }

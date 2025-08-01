@@ -83,3 +83,54 @@ Authorization: Bearer {{auth_token}}
 PATCH {{SRT_HostAddress}}/api/estados/3/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises
+GET {{SRT_HostAddress}}/api/Paises?paisId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/all
+GET {{SRT_HostAddress}}/api/paises/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/create
+POST {{SRT_HostAddress}}/api/paises/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisName": "Nicaraguaaaaa"
+}
+
+###
+
+# @name api/paises/update
+PUT {{SRT_HostAddress}}/api/paises/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisId": 1,
+  "paisName": "Nicaragua"
+}
+
+###
+
+# @name api/paises/{paisId}/delete
+DELETE {{SRT_HostAddress}}/api/paises/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/{paisId}/reactive
+PATCH {{SRT_HostAddress}}/api/paises/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

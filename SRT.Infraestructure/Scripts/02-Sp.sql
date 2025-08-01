@@ -25,7 +25,7 @@ AS
 BEGIN
     IF @EstadoId IS NULL AND @EstadoName IS NULL
         BEGIN
-            THROW 50001, N'Debe proporcionar al menos un parámetro: @EstadoId o @Estado, ambos no puede ser NULL.', 1;
+            THROW 50001, N'Debe proporcionar al menos un parámetro: @EstadoId o @EstadoName, ambos no puede ser NULL.', 1;
         END
 
     IF @EstadoId IS NOT NULL
@@ -67,16 +67,14 @@ GO
 ------------------------------------------------------------------------------------------------------------------------
 
 -- Insertar País
-CREATE OR ALTER PROCEDURE sp_Insertar_Pais @Pais VARCHAR(100),
+CREATE OR ALTER PROCEDURE sp_Insertar_Pais @PaisName VARCHAR(100),
                                            @FechaCreacion DATETIME,
-                                           @FechaModificacion DATETIME,
-                                           @CreadorID INT,
-                                           @ModificadorID INT,
-                                           @Activo BIT
+                                           @CreadorID INT
 AS
 BEGIN
-    INSERT INTO Pais (Pais, FechaCreacion, FechaModificacion, CreadorID, ModificadorID, Activo)
-    VALUES (@Pais, @FechaCreacion, @FechaModificacion, @CreadorID, @ModificadorID, @Activo)
+    INSERT INTO Pais (Pais, FechaCreacion, CreadorID, Activo)
+    VALUES (@PaisName, @FechaCreacion, @CreadorID, 1)
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
@@ -88,28 +86,50 @@ BEGIN
 END
 GO
 
--- Actualizar País
-CREATE OR ALTER PROCEDURE sp_Actualizar_Pais @PaisID INT,
-                                             @Pais VARCHAR(100),
-                                             @FechaModificacion DATETIME,
-                                             @ModificadorID INT,
-                                             @Activo BIT
+-- Obtener pais por parámetros
+CREATE OR ALTER PROCEDURE sp_Obtener_Pais_By_Params @PaisId INT = null,
+                                                    @PaisName VARCHAR(100) = null
 AS
 BEGIN
-    UPDATE Pais
-    SET Pais              = @Pais,
-        FechaModificacion = @FechaModificacion,
-        ModificadorID     = @ModificadorID,
-        Activo            = @Activo
-    WHERE PaisID = @PaisID
+    IF @PaisId IS NULL AND @PaisName IS NULL
+        BEGIN
+            THROW 50002, N'Debe proporcionar al menos un parámetro: @PaisId o @PaisName, ambos no puede ser NULL.', 1;
+        END
+
+    IF @PaisId IS NOT NULL
+        SELECT * FROM Pais WHERE PaisID = @PaisId
+    ELSE
+        SELECT * FROM Pais WHERE Pais = @PaisName
 END
 GO
 
--- Eliminar País
-CREATE OR ALTER PROCEDURE sp_Eliminar_Pais @PaisID INT
+-- Actualizar País
+CREATE OR ALTER PROCEDURE sp_Actualizar_Pais @PaisId INT,
+                                             @PaisName VARCHAR(100),
+                                             @FechaModificacion DATETIME,
+                                             @ModificadorId INT
 AS
 BEGIN
-    DELETE FROM Pais WHERE PaisID = @PaisID
+    UPDATE Pais
+    SET Pais              = @PaisName,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE PaisID = @PaisId
+END
+GO
+
+-- Eliminar o reactivarPaís
+CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Pais @PaisId INT,
+                                                       @Activo BIT,
+                                                       @FechaModificacion DATETIME,
+                                                       @ModificadorId INT
+AS
+BEGIN
+    Update Pais
+    SET Activo            = @Activo,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE PaisID = @PaisId
 END
 GO
 ------------------------------------------------------------------------------------------------------
