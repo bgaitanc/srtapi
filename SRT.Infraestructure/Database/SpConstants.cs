@@ -29,4 +29,14 @@ public static class SpConstants
     public const string DeleteOrReactivePais = "sp_Eliminar_O_Reactivar_Pais";
 
     #endregion
+
+    #region Departamentos
+
+    public const string GetAllDepartamentos = "sp_Obtener_Departamentos";
+    public const string GetDepartamentoByParams = "sp_Obtener_Departamento_By_Params";
+    public const string InsertDepartamento = "sp_Insertar_Departamento";
+    public const string UpdateDepartamento = "sp_Actualizar_Departamento";
+    public const string DeleteOrReactiveDepartamento = "sp_Eliminar_O_Reactivar_Departamento";
+
+    #endregion
 }

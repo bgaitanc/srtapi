@@ -39,7 +39,7 @@ public class EstadosRepository(SrtConnection srtConnection) : Repository<Estados
             request.EstadoId,
             request.EstadoName,
             FechaModificacion = date,
-            ModificadorID = default(int?)
+            ModificadorId = default(int?)
         };
 
         return await ExecSpAsync(SpConstants.UpdateEstado, dataToSave);

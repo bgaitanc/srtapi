@@ -39,7 +39,7 @@ public class PaisesRepository(SrtConnection srtConnection) : Repository<Paises>(
             request.PaisId,
             request.PaisName,
             FechaModificacion = date,
-            ModificadorID = default(int?)
+            ModificadorId = default(int?)
         };
 
         return await ExecSpAsync(SpConstants.UpdatePais, dataToSave);

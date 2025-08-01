@@ -72,3 +72,22 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 ```shell
   openssl rand -base64 32
 ```
+
+### ToDo's
+
+- [ ] Implementación de Roles
+- [ ] Update y Eliminación / reactivación Usuarios
+- [ ] Refresh tokens
+- [X] Registro y Login de Usuarios
+- [X] JWT Token
+- [X] CRUD Estados
+- [X] CRUD Paises
+- [X] CRUD Departamentos
+- [ ] CRUD Locacion
+- [ ] CRUD Vehiculos
+- [ ] CRUD Rutas
+- [ ] CRUD Viajes
+- [ ] CRUD Reservas
+- [ ] CRUD Métodos de pago
+- [ ] CRUD Pagos
+- [ ] Lógica de reservas - WS

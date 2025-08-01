@@ -87,7 +87,7 @@ Authorization: Bearer {{auth_token}}
 ###
 
 # @name api/paises
-GET {{SRT_HostAddress}}/api/Paises?paisId=1
+GET {{SRT_HostAddress}}/api/paises?paisId=1
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -132,5 +132,58 @@ Authorization: Bearer {{auth_token}}
 
 # @name api/paises/{paisId}/reactive
 PATCH {{SRT_HostAddress}}/api/paises/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos
+GET {{SRT_HostAddress}}/api/departamentos?departamentoName=Managua
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/all
+GET {{SRT_HostAddress}}/api/departamentos/all?paisId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/create
+POST {{SRT_HostAddress}}/api/departamentos/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisId": 1,
+  "DepartamentoName": "Managua"
+}
+
+###
+
+# @name api/departamentos/update
+PUT {{SRT_HostAddress}}/api/departamentos/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "departamentoId": 1,
+  "paisId": 1,
+  "departamentoName": "Managua"
+}
+
+###
+
+# @name api/departamentos/{departamentoId}/delete
+DELETE {{SRT_HostAddress}}/api/departamentos/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/{departamentoId}/reactive
+PATCH {{SRT_HostAddress}}/api/departamentos/1/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}

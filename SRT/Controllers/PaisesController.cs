@@ -13,7 +13,7 @@ namespace SRT.Controllers;
 public class PaisesController(IPaisService paisService) : SrtControllerBase
 {
     [HttpGet("all")]
-    public async Task<ActionResult<IEnumerable<GetPaisResponse>>> GetPaiss()
+    public async Task<ActionResult<IEnumerable<GetPaisResponse>>> GetPais()
     {
         return await ExecuteServiceAsync(async () => await paisService.GetPaises());
     }

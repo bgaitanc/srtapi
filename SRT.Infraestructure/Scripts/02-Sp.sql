@@ -1,7 +1,7 @@
 -- Insertar Estado
 CREATE OR ALTER PROCEDURE sp_Insertar_Estado @EstadoName VARCHAR(100),
                                              @FechaCreacion DATETIME,
-                                             @CreadorId int
+                                             @CreadorId INT
 AS
 BEGIN
     INSERT INTO Estados (Estado, FechaCreacion, CreadorID, Activo)
@@ -19,8 +19,8 @@ END
 GO
 
 -- Obtener Estados por parámetros
-CREATE OR ALTER PROCEDURE sp_Obtener_Estado_By_Params @EstadoId INT = null,
-                                                      @EstadoName VARCHAR(100) = null
+CREATE OR ALTER PROCEDURE sp_Obtener_Estado_By_Params @EstadoId INT = NULL,
+                                                      @EstadoName VARCHAR(100) = NULL
 AS
 BEGIN
     IF @EstadoId IS NULL AND @EstadoName IS NULL
@@ -57,7 +57,7 @@ CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Estado @EstadoId INT,
                                                          @ModificadorId INT
 AS
 BEGIN
-    Update Estados
+    UPDATE Estados
     SET Activo            = @Activo,
         FechaModificacion = @FechaModificacion,
         ModificadorID     = @ModificadorID
@@ -73,7 +73,7 @@ CREATE OR ALTER PROCEDURE sp_Insertar_Pais @PaisName VARCHAR(100),
 AS
 BEGIN
     INSERT INTO Pais (Pais, FechaCreacion, CreadorID, Activo)
-    VALUES (@PaisName, @FechaCreacion, @CreadorID, 1)
+    VALUES (@PaisName, @FechaCreacion, @CreadorID, 1);
     SELECT SCOPE_IDENTITY();
 END
 GO
@@ -87,8 +87,8 @@ END
 GO
 
 -- Obtener pais por parámetros
-CREATE OR ALTER PROCEDURE sp_Obtener_Pais_By_Params @PaisId INT = null,
-                                                    @PaisName VARCHAR(100) = null
+CREATE OR ALTER PROCEDURE sp_Obtener_Pais_By_Params @PaisId INT = NULL,
+                                                    @PaisName VARCHAR(100) = NULL
 AS
 BEGIN
     IF @PaisId IS NULL AND @PaisName IS NULL
@@ -118,14 +118,14 @@ BEGIN
 END
 GO
 
--- Eliminar o reactivarPaís
+-- Eliminar o reactivar País
 CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Pais @PaisId INT,
                                                        @Activo BIT,
                                                        @FechaModificacion DATETIME,
                                                        @ModificadorId INT
 AS
 BEGIN
-    Update Pais
+    UPDATE Pais
     SET Activo            = @Activo,
         FechaModificacion = @FechaModificacion,
         ModificadorID     = @ModificadorId
@@ -135,52 +135,75 @@ GO
 ------------------------------------------------------------------------------------------------------
 
 -- Insertar Departamento
-CREATE OR ALTER PROCEDURE sp_Insertar_Departamento @PaisID INT,
-                                                   @Departamento VARCHAR(100),
+CREATE OR ALTER PROCEDURE sp_Insertar_Departamento @PaisId INT,
+                                                   @DepartamentoName VARCHAR(100),
                                                    @FechaCreacion DATETIME,
-                                                   @FechaModificacion DATETIME,
-                                                   @CreadorID INT,
-                                                   @ModificadorID INT,
-                                                   @Activo BIT
+                                                   @CreadorId INT
 AS
 BEGIN
-    INSERT INTO Departamentos (PaisID, Departamento, FechaCreacion, FechaModificacion, CreadorID, ModificadorID, Activo)
-    VALUES (@PaisID, @Departamento, @FechaCreacion, @FechaModificacion, @CreadorID, @ModificadorID, @Activo)
+    INSERT INTO Departamentos (PaisID, Departamento, FechaCreacion, CreadorID, Activo)
+    VALUES (@PaisId, @DepartamentoName, @FechaCreacion, @CreadorId, 1);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
 -- Obtener Departamentos
-CREATE OR ALTER PROCEDURE sp_Obtener_Departamentos
+CREATE OR ALTER PROCEDURE sp_Obtener_Departamentos @PaisId INT = NULL
 AS
 BEGIN
-    SELECT * FROM Departamentos
+    IF @PaisId IS NULL
+        SELECT * FROM Departamentos
+    ELSE
+        SELECT * FROM Departamentos WHERE PaisID = @PaisId
+END
+GO
+
+-- Obtener Departamento por parámetros
+CREATE OR ALTER PROCEDURE sp_Obtener_Departamento_By_Params @DepartamentoId INT = NULL,
+                                                            @DepartamentoName VARCHAR(100) = NULL
+AS
+BEGIN
+    IF @DepartamentoId IS NULL AND @DepartamentoName IS NULL
+        BEGIN
+            THROW 50003, N'Debe proporcionar al menos un parámetro: @DepartamentoId o @DepartamentoName, ambos no puede ser NULL.', 1;
+        END
+
+    IF @DepartamentoId IS NOT NULL
+        SELECT * FROM Departamentos WHERE DepartamentoID = @DepartamentoId
+    ELSE
+        SELECT * FROM Departamentos WHERE Departamento = @DepartamentoName
 END
 GO
 
 -- Actualizar Departamento
-CREATE OR ALTER PROCEDURE sp_Actualizar_Departamento @DepartamentoID INT,
-                                                     @PaisID INT,
-                                                     @Departamento VARCHAR(100),
+CREATE OR ALTER PROCEDURE sp_Actualizar_Departamento @DepartamentoId INT,
+                                                     @PaisId INT,
+                                                     @DepartamentoName VARCHAR(100),
                                                      @FechaModificacion DATETIME,
-                                                     @ModificadorID INT,
-                                                     @Activo BIT
+                                                     @ModificadorId INT
 AS
 BEGIN
     UPDATE Departamentos
-    SET PaisID            = @PaisID,
-        Departamento      = @Departamento,
+    SET PaisID            = @PaisId,
+        Departamento      = @DepartamentoName,
         FechaModificacion = @FechaModificacion,
-        ModificadorID     = @ModificadorID,
-        Activo            = @Activo
-    WHERE DepartamentoID = @DepartamentoID
+        ModificadorID     = @ModificadorId
+    WHERE DepartamentoID = @DepartamentoId
 END
 GO
 
--- Eliminar Departamento
-CREATE OR ALTER PROCEDURE sp_Eliminar_Departamento @DepartamentoID INT
+-- Eliminar o reactivar Departamento
+CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Departamento @DepartamentoId INT,
+                                                               @Activo BIT,
+                                                               @FechaModificacion DATETIME,
+                                                               @ModificadorId INT
 AS
 BEGIN
-    DELETE FROM Departamentos WHERE DepartamentoID = @DepartamentoID
+    UPDATE Departamentos
+    SET Activo            = @Activo,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE DepartamentoId = @DepartamentoId
 END
 GO
 --------------------------------------------------------------------------------------------
@@ -290,7 +313,7 @@ CREATE OR ALTER PROCEDURE sp_Insertar_Usuario @Nombres VARCHAR(150),
                                               @Correo VARCHAR(255),
                                               @Telefono VARCHAR(25),
                                               @FechaCreacion DATETIME,
-                                              @CreadorId int
+                                              @CreadorId INT
 AS
 BEGIN
     INSERT INTO Usuarios (Nombres, Apellidos, Usuario, Contrasena, Correo, Telefono, FechaCreacion, CreadorID, Activo)
