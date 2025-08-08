@@ -39,4 +39,14 @@ public static class SpConstants
     public const string DeleteOrReactiveDepartamento = "sp_Eliminar_O_Reactivar_Departamento";
 
     #endregion
+
+    #region Locaciones
+
+    public const string GetAllLocaciones = "sp_Obtener_Locaciones";
+    public const string GetLocacionByParams = "sp_Obtener_Locacion_By_Params";
+    public const string InsertLocacion = "sp_Insertar_Locacion";
+    public const string UpdateLocacion = "sp_Actualizar_Locacion";
+    public const string DeleteOrReactiveLocacion = "sp_Eliminar_O_Reactivar_Locacion";
+
+    #endregion
 }

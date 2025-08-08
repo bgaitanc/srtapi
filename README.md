@@ -83,7 +83,7 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 - [X] CRUD Estados
 - [X] CRUD Paises
 - [X] CRUD Departamentos
-- [ ] CRUD Locacion
+- [X] CRUD Locacion
 - [ ] CRUD Vehiculos
 - [ ] CRUD Rutas
 - [ ] CRUD Viajes

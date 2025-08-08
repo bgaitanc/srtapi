@@ -187,3 +187,56 @@ Authorization: Bearer {{auth_token}}
 PATCH {{SRT_HostAddress}}/api/departamentos/1/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones
+GET {{SRT_HostAddress}}/api/locaciones?locacionName=Salvador Allende
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/all
+GET {{SRT_HostAddress}}/api/locaciones/all?departamentoId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/create
+POST {{SRT_HostAddress}}/api/locaciones/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "departamentoId": 1,
+  "locacionName": "Salvador Allende"
+}
+
+###
+
+# @name api/locaciones/update
+PUT {{SRT_HostAddress}}/api/locaciones/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "locacionId": 1,
+  "departamentoId": 1,
+  "locacionName": "Malecon"
+}
+
+###
+
+# @name api/locaciones/{locacionId}/delete
+DELETE {{SRT_HostAddress}}/api/locaciones/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/{locacionId}/reactive
+PATCH {{SRT_HostAddress}}/api/locaciones/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

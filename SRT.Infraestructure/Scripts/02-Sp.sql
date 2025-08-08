@@ -207,57 +207,82 @@ BEGIN
 END
 GO
 --------------------------------------------------------------------------------------------
+
 -- Insertar Locación
-CREATE OR ALTER PROCEDURE sp_Insertar_Locacion @DepartamentoID INT,
-                                               @Locacion VARCHAR(255),
+CREATE OR ALTER PROCEDURE sp_Insertar_Locacion @DepartamentoId INT,
+                                               @LocacionName VARCHAR(255),
                                                @FechaCreacion DATETIME,
-                                               @FechaModificacion DATETIME,
-                                               @CreadorID INT,
-                                               @ModificadorID INT,
-                                               @Activo BIT
+                                               @CreadorID INT
 AS
 BEGIN
-    INSERT INTO Locaciones (DepartamentoID, Locacion, FechaCreacion, FechaModificacion, CreadorID, ModificadorID,
-                            Activo)
-    VALUES (@DepartamentoID, @Locacion, @FechaCreacion, @FechaModificacion, @CreadorID, @ModificadorID, @Activo)
+    INSERT INTO Locaciones (DepartamentoID, Locacion, FechaCreacion, CreadorID, Activo)
+    VALUES (@DepartamentoId, @LocacionName, @FechaCreacion, @CreadorID, 1);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
 -- Obtener Locaciones
-CREATE OR ALTER PROCEDURE sp_Obtener_Locaciones
+CREATE OR ALTER PROCEDURE sp_Obtener_Locaciones @DepartamentoId INT = NULL
 AS
 BEGIN
-    SELECT * FROM Locaciones
+    IF @DepartamentoId IS NULL
+        SELECT * FROM Locaciones
+    ELSE
+        SELECT * FROM Locaciones WHERE DepartamentoID = @DepartamentoId
+END
+GO
+
+-- Obtener Departamento por parámetros
+CREATE OR ALTER PROCEDURE sp_Obtener_Locacion_By_Params @LocacionId INT = NULL,
+                                                        @LocacionName VARCHAR(100) = NULL
+AS
+BEGIN
+    IF @LocacionId IS NULL AND @LocacionName IS NULL
+        BEGIN
+            THROW 50003, N'Debe proporcionar al menos un parámetro: @LocacionId o @LocacionName, ambos no puede ser NULL.', 1;
+        END
+
+    IF @LocacionId IS NOT NULL
+        SELECT * FROM Locaciones WHERE DestinoID = @LocacionId
+    ELSE
+        SELECT * FROM Locaciones WHERE Locacion = @LocacionName
 END
 GO
 
 -- Actualizar Locación
-CREATE OR ALTER PROCEDURE sp_Actualizar_Locacion @DestinoID INT,
-                                                 @DepartamentoID INT,
-                                                 @Locacion VARCHAR(255),
+CREATE OR ALTER PROCEDURE sp_Actualizar_Locacion @LocacionId INT,
+                                                 @DepartamentoId INT,
+                                                 @LocacionName VARCHAR(255),
                                                  @FechaModificacion DATETIME,
-                                                 @ModificadorID INT,
-                                                 @Activo BIT
+                                                 @ModificadorID INT
 AS
 BEGIN
     UPDATE Locaciones
-    SET DepartamentoID    = @DepartamentoID,
-        Locacion          = @Locacion,
+    SET DepartamentoID    = @DepartamentoId,
+        Locacion          = @LocacionName,
         FechaModificacion = @FechaModificacion,
-        ModificadorID     = @ModificadorID,
-        Activo            = @Activo
-    WHERE DestinoID = @DestinoID
+        ModificadorID     = @ModificadorID
+    WHERE DestinoID = @LocacionId
 END
 GO
 
 -- Eliminar Locación
-CREATE OR ALTER PROCEDURE sp_Eliminar_Locacion @DestinoID INT
+CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Locacion @LocacionId INT,
+                                                           @Activo BIT,
+                                                           @FechaModificacion DATETIME,
+                                                           @ModificadorId INT
 AS
 BEGIN
-    DELETE FROM Locaciones WHERE DestinoID = @DestinoID
+    UPDATE Locaciones
+    SET Activo            = @Activo,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE DestinoID = @LocacionId
 END
 GO
+
 -------------------------------------------------------------------------------------------------
+
 -- Insertar Rol
 CREATE OR ALTER PROCEDURE sp_Insertar_Rol @Rol VARCHAR(255),
                                           @FechaCreacion DATETIME,

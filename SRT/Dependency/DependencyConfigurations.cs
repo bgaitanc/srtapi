@@ -16,6 +16,7 @@ public static class DependencyConfigurations
         services.AddScoped<IEstadoService, EstadoService>();
         services.AddScoped<IPaisService, PaisService>();
         services.AddScoped<IDepartamentoService, DepartamentoService>();
+        services.AddScoped<ILocacionesService, LocacionesService>();
     }
 
     public static void ConfigureAppRepositories(this IServiceCollection services)
@@ -24,5 +25,6 @@ public static class DependencyConfigurations
         services.AddScoped<IEstadosRepository, EstadosRepository>();
         services.AddScoped<IPaisesRepository, PaisesRepository>();
         services.AddScoped<IDepartamentosRepository, DepartamentosRepository>();
+        services.AddScoped<ILocacionesRepository, LocacionesRepository>();
     }
 }
