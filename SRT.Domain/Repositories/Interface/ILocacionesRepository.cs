@@ -10,5 +10,5 @@ public interface ILocacionesRepository : IRepository<Locaciones>
     Task<Locaciones?> GetLocacionByParams(GetLocacionRequest request);
     Task<int> CreateLocacion(CreateLocacionRequest request);
     Task<int> UpdateLocacion(UpdateLocacionRequest request);
-    Task<int> UpdateOrReactiveLocacion(int locacionId, bool activo);
+    Task<int> DeleteOrReactiveLocacion(int locacionId, bool activo);
 }

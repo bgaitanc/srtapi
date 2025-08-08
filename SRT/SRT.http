@@ -240,3 +240,58 @@ Authorization: Bearer {{auth_token}}
 PATCH {{SRT_HostAddress}}/api/locaciones/1/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos
+GET {{SRT_HostAddress}}/api/vehiculos?placa=BAGC0001
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/all
+GET {{SRT_HostAddress}}/api/vehiculos/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/create
+POST {{SRT_HostAddress}}/api/vehiculos/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "placa": "BAGC0001",
+  "modelo": "Kia Picanto",
+  "capacidad": 10
+}
+
+###
+
+# @name api/vehiculos/update
+PUT {{SRT_HostAddress}}/api/vehiculos/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "vehiculoId": 1,
+  "placa": "BAGC0001",
+  "modelo": "Kia",
+  "capacidad": 10
+}
+
+###
+
+# @name api/vehiculos/{vehiculoId}/delete
+DELETE {{SRT_HostAddress}}/api/vehiculos/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/{vehiculoId}/reactive
+PATCH {{SRT_HostAddress}}/api/vehiculos/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

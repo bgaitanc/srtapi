@@ -10,5 +10,5 @@ public interface IDepartamentosRepository : IRepository<Departamentos>
     Task<Departamentos?> GetDepartamentoByParams(GetDepartamentoRequest request);
     Task<int> CreateDepartamento(CreateDepartamentoRequest request);
     Task<int> UpdateDepartamento(UpdateDepartamentoRequest request);
-    Task<int> UpdateOrReactiveDepartamento(int departamentoId, bool activo);
+    Task<int> DeleteOrReactiveDepartamento(int departamentoId, bool activo);
 }

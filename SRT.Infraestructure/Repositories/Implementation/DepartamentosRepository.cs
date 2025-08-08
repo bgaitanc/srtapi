@@ -52,7 +52,7 @@ public class DepartamentosRepository(SrtConnection srtConnection)
         return await ExecSpAsync(SpConstants.UpdateDepartamento, dataToSave);
     }
 
-    public async Task<int> UpdateOrReactiveDepartamento(int departamentoId, bool activo)
+    public async Task<int> DeleteOrReactiveDepartamento(int departamentoId, bool activo)
     {
         var date = DateTime.Now;
         var dataToSave = new

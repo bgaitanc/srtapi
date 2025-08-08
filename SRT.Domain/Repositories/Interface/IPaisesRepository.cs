@@ -10,5 +10,5 @@ public interface IPaisesRepository : IRepository<Paises>
     Task<Paises?> GetPaisByParams(GetPaisRequest request);
     Task<int> CreatePais(CreatePaisRequest request);
     Task<int> UpdatePais(UpdatePaisRequest request);
-    Task<int> UpdateOrReactivePais(int paisId, bool activo);
+    Task<int> DeleteOrReactivePais(int paisId, bool activo);
 }

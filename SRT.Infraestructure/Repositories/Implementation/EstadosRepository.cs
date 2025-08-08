@@ -45,7 +45,7 @@ public class EstadosRepository(SrtConnection srtConnection) : Repository<Estados
         return await ExecSpAsync(SpConstants.UpdateEstado, dataToSave);
     }
 
-    public async Task<int> UpdateOrReactiveEstado(int estadoId, bool activo)
+    public async Task<int> DeleteOrReactiveEstado(int estadoId, bool activo)
     {
         var date = DateTime.Now;
         var dataToSave = new

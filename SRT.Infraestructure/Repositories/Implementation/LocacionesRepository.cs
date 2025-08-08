@@ -52,7 +52,7 @@ public class LocacionesRepository(SrtConnection srtConnection)
         return await ExecSpAsync(SpConstants.UpdateLocacion, dataToSave);
     }
 
-    public async Task<int> UpdateOrReactiveLocacion(int locacionId, bool activo)
+    public async Task<int> DeleteOrReactiveLocacion(int locacionId, bool activo)
     {
         var date = DateTime.Now;
         var dataToSave = new

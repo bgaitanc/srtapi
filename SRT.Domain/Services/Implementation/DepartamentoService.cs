@@ -45,6 +45,6 @@ public class DepartamentoService(IDepartamentosRepository departamentosRepositor
 
     public async Task EliminarReactivarDepartamento(int departamentoId, bool activo)
     {
-        await departamentosRepository.UpdateOrReactiveDepartamento(departamentoId, activo);
+        await departamentosRepository.DeleteOrReactiveDepartamento(departamentoId, activo);
     }
 }

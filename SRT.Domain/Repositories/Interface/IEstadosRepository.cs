@@ -10,5 +10,5 @@ public interface IEstadosRepository : IRepository<Estados>
     Task<Estados?> GetEstadoByParams(GetEstadoRequest request);
     Task<int> CreateEstado(CreateEstadoRequest request);
     Task<int> UpdateEstado(UpdateEstadoRequest request);
-    Task<int> UpdateOrReactiveEstado(int estadoId, bool activo);
+    Task<int> DeleteOrReactiveEstado(int estadoId, bool activo);
 }

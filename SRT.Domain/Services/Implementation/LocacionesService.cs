@@ -44,6 +44,6 @@ public class LocacionesService(ILocacionesRepository locacionesRepository) : ILo
 
     public async Task EliminarReactivarLocacion(int locacionId, bool activo)
     {
-        await locacionesRepository.UpdateOrReactiveLocacion(locacionId, activo);
+        await locacionesRepository.DeleteOrReactiveLocacion(locacionId, activo);
     }
 }

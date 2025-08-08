@@ -49,4 +49,14 @@ public static class SpConstants
     public const string DeleteOrReactiveLocacion = "sp_Eliminar_O_Reactivar_Locacion";
 
     #endregion
+
+    #region Vehiculos
+
+    public const string GetAllVehiculos = "sp_Obtener_Vehiculos";
+    public const string GetVehiculoByParams = "sp_Obtener_Vehiculo_By_Params";
+    public const string InsertVehiculo = "sp_Insertar_Vehiculo";
+    public const string UpdateVehiculo = "sp_Actualizar_Vehiculo";
+    public const string DeleteOrReactiveVehiculo = "sp_Eliminar_O_Reactivar_Vehiculo";
+
+    #endregion
 }

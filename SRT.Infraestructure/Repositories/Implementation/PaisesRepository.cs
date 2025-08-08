@@ -45,7 +45,7 @@ public class PaisesRepository(SrtConnection srtConnection) : Repository<Paises>(
         return await ExecSpAsync(SpConstants.UpdatePais, dataToSave);
     }
 
-    public async Task<int> UpdateOrReactivePais(int paisId, bool activo)
+    public async Task<int> DeleteOrReactivePais(int paisId, bool activo)
     {
         var date = DateTime.Now;
         var dataToSave = new

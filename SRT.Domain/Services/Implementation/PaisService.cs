@@ -43,6 +43,6 @@ public class PaisService(IPaisesRepository paisesRepository) : IPaisService
 
     public async Task EliminarReactivarPais(int paisId, bool activo)
     {
-        await paisesRepository.UpdateOrReactivePais(paisId, activo);
+        await paisesRepository.DeleteOrReactivePais(paisId, activo);
     }
 }

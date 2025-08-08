@@ -34,15 +34,15 @@ public class EstadoService(IEstadosRepository estadosRepository) : IEstadoServic
     public async Task<UpdateEstadoResponse> UpdateEstado(UpdateEstadoRequest request)
     {
         await estadosRepository.UpdateEstado(request);
-        
+
         return new UpdateEstadoResponse
         {
             EstadoId = request.EstadoId
         };
     }
 
-    public async Task  EliminarReactivarEstado(int estadoId, bool activo)
+    public async Task EliminarReactivarEstado(int estadoId, bool activo)
     {
-        await estadosRepository.UpdateOrReactiveEstado(estadoId, activo);
+        await estadosRepository.DeleteOrReactiveEstado(estadoId, activo);
     }
 }

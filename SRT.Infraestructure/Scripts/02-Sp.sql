@@ -232,14 +232,14 @@ BEGIN
 END
 GO
 
--- Obtener Departamento por parámetros
+-- Obtener Locacion por parámetros
 CREATE OR ALTER PROCEDURE sp_Obtener_Locacion_By_Params @LocacionId INT = NULL,
                                                         @LocacionName VARCHAR(100) = NULL
 AS
 BEGIN
     IF @LocacionId IS NULL AND @LocacionName IS NULL
         BEGIN
-            THROW 50003, N'Debe proporcionar al menos un parámetro: @LocacionId o @LocacionName, ambos no puede ser NULL.', 1;
+            THROW 50004, N'Debe proporcionar al menos un parámetro: @LocacionId o @LocacionName, ambos no puede ser NULL.', 1;
         END
 
     IF @LocacionId IS NOT NULL
@@ -266,7 +266,7 @@ BEGIN
 END
 GO
 
--- Eliminar Locación
+-- Eliminar o reactivar Locación
 CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Locacion @LocacionId INT,
                                                            @Activo BIT,
                                                            @FechaModificacion DATETIME,
@@ -449,19 +449,18 @@ BEGIN
 END
 GO
 ----------------------------------------------------------------------------------------------------
+
 -- Insertar Vehículo
 CREATE OR ALTER PROCEDURE sp_Insertar_Vehiculo @Placa NVARCHAR(20),
                                                @Modelo NVARCHAR(100),
                                                @Capacidad INT,
                                                @FechaCreacion DATETIME,
-                                               @FechaModificacion DATETIME,
-                                               @CreadorID INT,
-                                               @ModificadorID INT,
-                                               @Activo BIT
+                                               @CreadorId INT
 AS
 BEGIN
-    INSERT INTO Vehiculos (Placa, Modelo, Capacidad, FechaCreacion, FechaModificacion, CreadorID, ModificadorID, Activo)
-    VALUES (@Placa, @Modelo, @Capacidad, @FechaCreacion, @FechaModificacion, @CreadorID, @ModificadorID, @Activo)
+    INSERT INTO Vehiculos (Placa, Modelo, Capacidad, FechaCreacion, CreadorID, Activo)
+    VALUES (@Placa, @Modelo, @Capacidad, @FechaCreacion, @CreadorId, 1);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
@@ -473,14 +472,34 @@ BEGIN
 END
 GO
 
+-- Obtener Vehiculo por parámetros
+CREATE OR ALTER PROCEDURE sp_Obtener_Vehiculo_By_Params @VehiculoId INT = NULL,
+                                                        @Placa VARCHAR(20) = NULL,
+                                                        @Modelo VARCHAR(100) = NULL
+AS
+BEGIN
+    IF @VehiculoId IS NULL AND @Placa IS NULL AND @Modelo IS NULL
+        BEGIN
+            THROW 50005, N'Debe proporcionar al menos un parámetro: @VehiculoId, @Placa o @Modelo, al menos 1 no  puede ser NULL.', 1;
+        END
+
+    IF @VehiculoId IS NOT NULL
+        SELECT * FROM Vehiculos WHERE VehiculoID = @VehiculoId
+    ELSE
+        IF @Placa IS NOT NULL
+            SELECT * FROM Vehiculos WHERE Placa = @Placa
+        ELSE
+            SELECT * FROM Vehiculos WHERE Modelo = @Modelo
+END
+GO
+
 -- Actualizar Vehículo
-CREATE OR ALTER PROCEDURE sp_Actualizar_Vehiculo @VehiculoID INT,
+CREATE OR ALTER PROCEDURE sp_Actualizar_Vehiculo @VehiculoId INT,
                                                  @Placa NVARCHAR(20),
                                                  @Modelo NVARCHAR(100),
                                                  @Capacidad INT,
                                                  @FechaModificacion DATETIME,
-                                                 @ModificadorID INT,
-                                                 @Activo BIT
+                                                 @ModificadorId INT
 AS
 BEGIN
     UPDATE Vehiculos
@@ -488,19 +507,26 @@ BEGIN
         Modelo            = @Modelo,
         Capacidad         = @Capacidad,
         FechaModificacion = @FechaModificacion,
-        ModificadorID     = @ModificadorID,
-        Activo            = @Activo
-    WHERE VehiculoID = @VehiculoID
+        ModificadorID = @ModificadorID
+    WHERE VehiculoID = @VehiculoId
 END
 GO
 
--- Eliminar Vehículo
-CREATE OR ALTER PROCEDURE sp_Eliminar_Vehiculo @VehiculoID INT
+-- Eliminar o reactivar Vehículo
+CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Vehiculo @VehiculoId INT,
+                                                           @Activo BIT,
+                                                           @FechaModificacion DATETIME,
+                                                           @ModificadorId INT
 AS
 BEGIN
-    DELETE FROM Vehiculos WHERE VehiculoID = @VehiculoID
+    UPDATE Vehiculos
+    SET Activo            = @Activo,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE VehiculoID = @VehiculoId
 END
 GO
+
 ---------------------------------------------------------------------------------------------------
 -- Insertar Ruta
 CREATE OR ALTER PROCEDURE sp_Insertar_Ruta @LocacionOrigenID INT,
