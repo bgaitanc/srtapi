@@ -85,9 +85,10 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 - [X] CRUD Departamentos
 - [X] CRUD Locacion
 - [X] CRUD Vehiculos
-- [ ] CRUD Rutas
+- [X] CRUD Rutas
 - [ ] CRUD Viajes
 - [ ] CRUD Reservas
 - [ ] CRUD Métodos de pago
 - [ ] CRUD Pagos
+- [ ] CRUD Reservas (Básico)
 - [ ] Lógica de reservas - WS

@@ -28,7 +28,7 @@ public class LocacionesService(ILocacionesRepository locacionesRepository) : ILo
         {
             LocacionId = result,
             DepartamentoId = request.DepartamentoId,
-            LocacionName = request.LocacionName,
+            LocacionName = request.LocacionName
         };
     }
 
@@ -36,7 +36,7 @@ public class LocacionesService(ILocacionesRepository locacionesRepository) : ILo
     {
         await locacionesRepository.UpdateLocacion(request);
 
-        return new UpdateLocacionResponse()
+        return new UpdateLocacionResponse
         {
             LocacionId = request.LocacionId
         };
