@@ -2,10 +2,10 @@
 
 public class RegisterUserRequest
 {
-    public string Nombres { get; set; }
-    public string Apellidos { get; set; }
-    public string Usuario { get; set; }
-    public string Contrasena { get; set; }
-    public string Correo { get; set; }
-    public string Telefono { get; set; }
+    public required string Nombres { get; set; }
+    public required string Apellidos { get; set; }
+    public required string Usuario { get; set; }
+    public required string Contrasena { get; set; }
+    public required string Correo { get; set; }
+    public required string Telefono { get; set; }
 }

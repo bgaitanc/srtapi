@@ -1,7 +1,5 @@
-@Auth = ''
-
-# @name api/Authentication/login/
-POST {{SRT_HostAddress}}/api/Authentication/login/
+# @name api/authentication/login/
+POST {{SRT_HostAddress}}/api/Authentication/login
 Content-Type: application/json
 
 {
@@ -9,17 +7,291 @@ Content-Type: application/json
   "password": "mortadela01"
 }
 
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
 ###
 
-# @name api/Users/register
+# @name api/users/register
 POST {{SRT_HostAddress}}/api/Users/register
 Content-Type: application/json
 
 {
   "nombres": "Brian Antonio",
   "apellidos": "Gaitán Corea",
-  "usuario": "bgaitan",
-  "contrasena": "mortadela01",
-  "correo": "test@hotmail.com",
+  "usuario": "bgaitan2",
+  "contrasena": "mortadela02",
+  "correo": "test2@hotmail.com",
   "telefono": "12345678"
 }
+
+### 
+
+# @name api/users/info
+GET {{SRT_HostAddress}}/api/Users/info
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados
+GET {{SRT_HostAddress}}/api/estados?EstadoId=3
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/all
+GET {{SRT_HostAddress}}/api/estados/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/create
+POST {{SRT_HostAddress}}/api/estados/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "estadoName": "Completado"
+}
+
+###
+
+# @name api/estados/update
+PUT {{SRT_HostAddress}}/api/estados/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "estadoId": 1,
+  "estadoName": "Activo"
+}
+
+###
+
+# @name api/estados/{estadoId}/delete
+DELETE {{SRT_HostAddress}}/api/estados/3/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/estados/{estadoId}/reactive
+PATCH {{SRT_HostAddress}}/api/estados/3/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises
+GET {{SRT_HostAddress}}/api/paises?paisId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/all
+GET {{SRT_HostAddress}}/api/paises/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/create
+POST {{SRT_HostAddress}}/api/paises/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisName": "Nicaraguaaaaa"
+}
+
+###
+
+# @name api/paises/update
+PUT {{SRT_HostAddress}}/api/paises/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisId": 1,
+  "paisName": "Nicaragua"
+}
+
+###
+
+# @name api/paises/{paisId}/delete
+DELETE {{SRT_HostAddress}}/api/paises/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/paises/{paisId}/reactive
+PATCH {{SRT_HostAddress}}/api/paises/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos
+GET {{SRT_HostAddress}}/api/departamentos?departamentoName=Managua
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/all
+GET {{SRT_HostAddress}}/api/departamentos/all?paisId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/create
+POST {{SRT_HostAddress}}/api/departamentos/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "paisId": 1,
+  "DepartamentoName": "Managua"
+}
+
+###
+
+# @name api/departamentos/update
+PUT {{SRT_HostAddress}}/api/departamentos/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "departamentoId": 1,
+  "paisId": 1,
+  "departamentoName": "Managua"
+}
+
+###
+
+# @name api/departamentos/{departamentoId}/delete
+DELETE {{SRT_HostAddress}}/api/departamentos/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/departamentos/{departamentoId}/reactive
+PATCH {{SRT_HostAddress}}/api/departamentos/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones
+GET {{SRT_HostAddress}}/api/locaciones?locacionName=Salvador Allende
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/all
+GET {{SRT_HostAddress}}/api/locaciones/all?departamentoId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/create
+POST {{SRT_HostAddress}}/api/locaciones/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "departamentoId": 1,
+  "locacionName": "Salvador Allende"
+}
+
+###
+
+# @name api/locaciones/update
+PUT {{SRT_HostAddress}}/api/locaciones/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "locacionId": 1,
+  "departamentoId": 1,
+  "locacionName": "Malecon"
+}
+
+###
+
+# @name api/locaciones/{locacionId}/delete
+DELETE {{SRT_HostAddress}}/api/locaciones/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/locaciones/{locacionId}/reactive
+PATCH {{SRT_HostAddress}}/api/locaciones/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos
+GET {{SRT_HostAddress}}/api/vehiculos?placa=BAGC0001
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/all
+GET {{SRT_HostAddress}}/api/vehiculos/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/create
+POST {{SRT_HostAddress}}/api/vehiculos/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "placa": "BAGC0001",
+  "modelo": "Kia Picanto",
+  "capacidad": 10
+}
+
+###
+
+# @name api/vehiculos/update
+PUT {{SRT_HostAddress}}/api/vehiculos/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "vehiculoId": 1,
+  "placa": "BAGC0001",
+  "modelo": "Kia",
+  "capacidad": 10
+}
+
+###
+
+# @name api/vehiculos/{vehiculoId}/delete
+DELETE {{SRT_HostAddress}}/api/vehiculos/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/vehiculos/{vehiculoId}/reactive
+PATCH {{SRT_HostAddress}}/api/vehiculos/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

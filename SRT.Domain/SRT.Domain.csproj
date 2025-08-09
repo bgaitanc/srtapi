@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SRT.Domain.Entities\SRT.Domain.Entities.csproj" />
-      <ProjectReference Include="..\SRT.Domain.Models\SRT.Domain.Models.csproj" />
+      <ProjectReference Include="..\SRT.Domain.Utils\SRT.Domain.Utils.csproj" />
     </ItemGroup>
 
     <ItemGroup>
