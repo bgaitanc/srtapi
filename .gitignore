@@ -15,6 +15,7 @@ appsettings.Production.json
 appsettings.Staging.json
 appsettings.*.user.json
 *.useros
+SRT/appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
