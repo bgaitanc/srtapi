@@ -507,7 +507,7 @@ BEGIN
         Modelo            = @Modelo,
         Capacidad         = @Capacidad,
         FechaModificacion = @FechaModificacion,
-        ModificadorID = @ModificadorID
+        ModificadorID = @ModificadorId
     WHERE VehiculoID = @VehiculoId
 END
 GO
@@ -528,22 +528,20 @@ END
 GO
 
 ---------------------------------------------------------------------------------------------------
+
 -- Insertar Ruta
-CREATE OR ALTER PROCEDURE sp_Insertar_Ruta @LocacionOrigenID INT,
-                                           @LocacionDestinoID INT,
-                                           @DistanciaKM DECIMAL(18, 2),
+CREATE OR ALTER PROCEDURE sp_Insertar_Ruta @LocacionOrigenId INT,
+                                           @LocacionDestinoId INT,
+                                           @DistanciaKm DECIMAL(18, 2),
                                            @TiempoEstimado TIME,
                                            @FechaCreacion DATETIME,
-                                           @FechaModificacion DATETIME,
-                                           @CreadorID INT,
-                                           @ModificadorID INT,
-                                           @Activo BIT
+                                           @CreadorId INT
 AS
 BEGIN
-    INSERT INTO Rutas (LocacionOrigenID, LocacionDestinoID, DistanciaKM, TiempoEstimado, FechaCreacion,
-                       FechaModificacion, CreadorID, ModificadorID, Activo)
-    VALUES (@LocacionOrigenID, @LocacionDestinoID, @DistanciaKM, @TiempoEstimado, @FechaCreacion, @FechaModificacion,
-            @CreadorID, @ModificadorID, @Activo)
+    INSERT INTO Rutas (LocacionOrigenID, LocacionDestinoID, DistanciaKM, TiempoEstimado, FechaCreacion, CreadorID,
+                       Activo)
+    VALUES (@LocacionOrigenId, @LocacionDestinoId, @DistanciaKm, @TiempoEstimado, @FechaCreacion, @CreadorId, 1);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
@@ -555,37 +553,65 @@ BEGIN
 END
 GO
 
--- Actualizar Ruta
-CREATE OR ALTER PROCEDURE sp_Actualizar_Ruta @RutaID INT,
-                                             @LocacionOrigenID INT,
-                                             @LocacionDestinoID INT,
-                                             @DistanciaKM DECIMAL(18, 2),
-                                             @TiempoEstimado TIME,
-                                             @FechaModificacion DATETIME,
-                                             @ModificadorID INT,
-                                             @Activo BIT
+-- Obtener Ruta por parámetros
+CREATE OR ALTER PROCEDURE sp_Obtener_Ruta_By_Params @RutaId INT = NULL,
+                                                    @LocacionOrigenId INT = NULL,
+                                                    @LocacionDestinoId INT = NULL
 AS
 BEGIN
-    UPDATE Rutas
-    SET LocacionOrigenID  = @LocacionOrigenID,
-        LocacionDestinoID = @LocacionDestinoID,
-        DistanciaKM       = @DistanciaKM,
-        TiempoEstimado    = @TiempoEstimado,
-        FechaModificacion = @FechaModificacion,
-        ModificadorID     = @ModificadorID,
-        Activo            = @Activo
-    WHERE RutaID = @RutaID
+    IF @RutaId IS NULL AND @LocacionOrigenId IS NULL AND @LocacionDestinoId IS NULL
+        BEGIN
+            THROW 50005, N'Debe proporcionar al menos un parámetro: @RutaId, @LocacionOrigenId o @LocacionDestinoId, al menos 1 no  puede ser NULL.', 1;
+        END
+
+    IF @RutaId IS NOT NULL
+        SELECT * FROM Rutas WHERE RutaID = @RutaId
+    ELSE
+        IF @LocacionOrigenId IS NOT NULL
+            SELECT * FROM Rutas WHERE LocacionOrigenID = @LocacionOrigenId
+        ELSE
+            SELECT * FROM Rutas WHERE LocacionDestinoID = @LocacionDestinoId
 END
 GO
 
--- Eliminar Ruta
-CREATE OR ALTER PROCEDURE sp_Eliminar_Ruta @RutaID INT
+-- Actualizar Ruta
+CREATE OR ALTER PROCEDURE sp_Actualizar_Ruta @RutaId INT,
+                                             @LocacionOrigenId INT,
+                                             @LocacionDestinoId INT,
+                                             @DistanciaKm DECIMAL(18, 2),
+                                             @TiempoEstimado TIME,
+                                             @FechaModificacion DATETIME,
+                                             @ModificadorId INT
 AS
 BEGIN
-    DELETE FROM Rutas WHERE RutaID = @RutaID
+    UPDATE Rutas
+    SET LocacionOrigenID  = @LocacionOrigenId,
+        LocacionDestinoID = @LocacionDestinoId,
+        DistanciaKM       = @DistanciaKm,
+        TiempoEstimado    = @TiempoEstimado,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE RutaID = @RutaId
 END
 GO
+
+-- Eliminar o reactivar Ruta
+CREATE OR ALTER PROCEDURE sp_Eliminar_O_Reactivar_Ruta @RutaId INT,
+                                                       @Activo BIT,
+                                                       @FechaModificacion DATETIME,
+                                                       @ModificadorId INT
+AS
+BEGIN
+    UPDATE Rutas
+    SET Activo            = @Activo,
+        FechaModificacion = @FechaModificacion,
+        ModificadorID     = @ModificadorId
+    WHERE RutaID = @RutaId
+END
+GO
+
 --------------------------------------------------------------------------------------------------
+
 -- Insertar Viaje
 CREATE OR ALTER PROCEDURE sp_Insertar_Viaje @RutaID INT,
                                             @VehiculoID INT,

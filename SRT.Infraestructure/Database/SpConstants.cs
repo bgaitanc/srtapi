@@ -59,4 +59,14 @@ public static class SpConstants
     public const string DeleteOrReactiveVehiculo = "sp_Eliminar_O_Reactivar_Vehiculo";
 
     #endregion
+
+    #region Rutas
+
+    public const string GetAllRutas = "sp_Obtener_Rutas";
+    public const string GetRutaByParams = "sp_Obtener_Ruta_By_Params";
+    public const string InsertRuta = "sp_Insertar_Ruta";
+    public const string UpdateRuta = "sp_Actualizar_Ruta";
+    public const string DeleteOrReactiveRuta = "sp_Eliminar_O_Reactivar_Ruta";
+
+    #endregion
 }

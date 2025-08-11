@@ -18,6 +18,7 @@ public static class DependencyConfigurations
         services.AddScoped<IDepartamentoService, DepartamentoService>();
         services.AddScoped<ILocacionesService, LocacionesService>();
         services.AddScoped<IVehiculosService, VehiculosService>();
+        services.AddScoped<IRutasService, RutasService>();
     }
 
     public static void ConfigureAppRepositories(this IServiceCollection services)
@@ -28,5 +29,6 @@ public static class DependencyConfigurations
         services.AddScoped<IDepartamentosRepository, DepartamentosRepository>();
         services.AddScoped<ILocacionesRepository, LocacionesRepository>();
         services.AddScoped<IVehiculosRepository, VehiculosRepository>();
+        services.AddScoped<IRutasRepository, RutasRepository>();
     }
 }

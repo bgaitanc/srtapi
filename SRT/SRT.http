@@ -295,3 +295,61 @@ Authorization: Bearer {{auth_token}}
 PATCH {{SRT_HostAddress}}/api/vehiculos/1/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/rutas
+GET {{SRT_HostAddress}}/api/rutas?rutaId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/rutas/all
+GET {{SRT_HostAddress}}/api/rutas/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# TODO se debe de revisar como se recibirá el campo Tiempo Estimado
+# @name api/rutas/create
+POST {{SRT_HostAddress}}/api/rutas/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "locacionOrigenId": 1,
+  "locacionDestinoId": 1,
+  "distanciaKm": 10.2,
+  "tiempoEstimado": "16:15:00"
+}
+
+###
+
+# @name api/rutas/update
+PUT {{SRT_HostAddress}}/api/rutas/update
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "rutaId": 1,
+  "locacionOrigenId": 1,
+  "locacionDestinoId": 1,
+  "distanciaKm": 10.3,
+  "tiempoEstimado": "18:15:00"
+}
+
+###
+
+# @name api/rutas/{rutaId}/delete
+DELETE {{SRT_HostAddress}}/api/rutas/1/delete
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/rutas/{rutaId}/reactive
+PATCH {{SRT_HostAddress}}/api/rutas/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
