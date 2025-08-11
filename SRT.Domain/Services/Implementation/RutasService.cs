@@ -21,6 +21,11 @@ public class RutasService(IRutasRepository rutasRepository) : IRutasService
         return result.Select(d => new GetRutaResponse(d));
     }
 
+    public async Task<IEnumerable<GetRutaWithNamesResponse>> GetRutasWithNames()
+    {
+        return await rutasRepository.GetRutasWithNames();
+    }
+
     public async Task<CreateRutaResponse> CreateRuta(CreateRutaRequest request)
     {
         var result = await rutasRepository.CreateRuta(request);

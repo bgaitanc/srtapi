@@ -549,7 +549,17 @@ GO
 CREATE OR ALTER PROCEDURE sp_Obtener_Rutas
 AS
 BEGIN
-    SELECT * FROM Rutas
+    SELECT
+        r.RutaID,
+        r.LocacionOrigenID,
+        lo.Locacion AS LocacionOrigenNombre,
+        r.LocacionDestinoID,
+        ld.Locacion AS LocacionDestinoNombre,
+        r.DistanciaKM,
+        r.TiempoEstimado
+    FROM Rutas r
+    INNER JOIN Locaciones lo ON r.LocacionOrigenID = lo.DestinoID
+    INNER JOIN Locaciones ld ON r.LocacionDestinoID = ld.DestinoID
 END
 GO
 

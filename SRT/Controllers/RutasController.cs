@@ -13,9 +13,9 @@ namespace SRT.Controllers;
 public class RutasController(IRutasService rutasService) : SrtControllerBase
 {
     [HttpGet("all")]
-    public async Task<ActionResult<IEnumerable<GetRutaResponse>>> GetRuta()
+    public async Task<ActionResult<IEnumerable<GetRutaWithNamesResponse>>> GetRuta()
     {
-        return await ExecuteServiceAsync(async () => await rutasService.GetRutas());
+        return await ExecuteServiceAsync(async () => await rutasService.GetRutasWithNames());
     }
 
     [HttpGet]

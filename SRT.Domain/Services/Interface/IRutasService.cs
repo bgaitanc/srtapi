@@ -6,6 +6,7 @@ public interface IRutasService
 {
     Task<GetRutaResponse?> GetRuta(GetRutaRequest request);
     Task<IEnumerable<GetRutaResponse>> GetRutas();
+    Task<IEnumerable<GetRutaWithNamesResponse>> GetRutasWithNames();
     Task<CreateRutaResponse> CreateRuta(CreateRutaRequest request);
     Task<UpdateRutaResponse> UpdateRuta(UpdateRutaRequest request);
     Task EliminarReactivarRuta(int rutaId, bool activo);

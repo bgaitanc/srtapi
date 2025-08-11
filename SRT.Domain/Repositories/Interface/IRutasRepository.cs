@@ -8,6 +8,7 @@ public interface IRutasRepository : IRepository<Rutas>
 {
     Task<IEnumerable<Rutas>> GetRutas();
     Task<Rutas?> GetRutaByParams(GetRutaRequest request);
+    Task<IEnumerable<GetRutaWithNamesResponse>> GetRutasWithNames();
     Task<int> CreateRuta(CreateRutaRequest request);
     Task<int> UpdateRuta(UpdateRutaRequest request);
     Task<int> DeleteOrReactiveRuta(int rutaId, bool activo);

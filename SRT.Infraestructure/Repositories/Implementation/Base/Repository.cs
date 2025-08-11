@@ -23,6 +23,12 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         return await connection.QueryAsync<T>(sql, param, commandType: CommandType.StoredProcedure);
     }
 
+    protected async Task<IEnumerable<T>> QuerySpAsync<T>(string sql, object? param = null)
+    {
+        await using var connection = _srtConnection.GetConnection();
+        return await connection.QueryAsync<T>(sql, param, commandType: CommandType.StoredProcedure);
+    }
+
     public async Task<T?> GetFirstOrDefaultSpAsync(string sql, object? param = null)
     {
         await using var connection = _srtConnection.GetConnection();

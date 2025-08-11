@@ -15,6 +15,11 @@ public class RutasRepository(SrtConnection srtConnection) : Repository<Rutas>(sr
     {
         return await QuerySpAsync(SpConstants.GetAllRutas);
     }
+    
+    public async Task<IEnumerable<GetRutaWithNamesResponse>> GetRutasWithNames()
+    {
+        return await QuerySpAsync<GetRutaWithNamesResponse>(SpConstants.GetAllRutas);
+    }
 
     public async Task<Rutas?> GetRutaByParams(GetRutaRequest request)
     {
