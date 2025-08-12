@@ -39,13 +39,13 @@ public class RutasController(IRutasService rutasService) : SrtControllerBase
     }
 
     [HttpDelete("{rutaId:int}/delete")]
-    public async Task<ActionResult> DeleteRuta([FromRoute] int rutaId)
+    public async Task<ActionResult<SrtGenericResponse>> DeleteRuta([FromRoute] int rutaId)
     {
         return await ExecuteServiceAsync(async () => await rutasService.EliminarReactivarRuta(rutaId, false));
     }
 
     [HttpPatch("{rutaId:int}/reactive")]
-    public async Task<ActionResult> ActiveRuta([FromRoute] int rutaId)
+    public async Task<ActionResult<SrtGenericResponse>> ActiveRuta([FromRoute] int rutaId)
     {
         return await ExecuteServiceAsync(async () => await rutasService.EliminarReactivarRuta(rutaId, true));
     }

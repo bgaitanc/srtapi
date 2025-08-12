@@ -42,14 +42,14 @@ public class DepartamentosController(IDepartamentoService departamentoService) :
     }
 
     [HttpDelete("{departamentoId:int}/delete")]
-    public async Task<ActionResult> DeleteDepartamento([FromRoute] int departamentoId)
+    public async Task<ActionResult<SrtGenericResponse>> DeleteDepartamento([FromRoute] int departamentoId)
     {
         return await ExecuteServiceAsync(async () =>
             await departamentoService.EliminarReactivarDepartamento(departamentoId, false));
     }
 
     [HttpPatch("{departamentoId:int}/reactive")]
-    public async Task<ActionResult> ActiveDepartamento([FromRoute] int departamentoId)
+    public async Task<ActionResult<SrtGenericResponse>> ActiveDepartamento([FromRoute] int departamentoId)
     {
         return await ExecuteServiceAsync(async () =>
             await departamentoService.EliminarReactivarDepartamento(departamentoId, true));

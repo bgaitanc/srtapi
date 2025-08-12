@@ -12,6 +12,6 @@ public class AuthenticationController(IAuthenticationService authenticationServi
     [HttpPost("login")]
     public async Task<ActionResult<AuthenticationResponse?>> Authenticate([FromBody] AuthenticationRequest request)
     {
-        return await ExecuteServiceAsync(async () => await authenticationService.GenerateToken(request), true);
+        return await ExecuteServiceAsync(async () => await authenticationService.GenerateToken(request));
     }
 }

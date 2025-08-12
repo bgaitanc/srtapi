@@ -37,13 +37,13 @@ public class PaisesController(IPaisService paisService) : SrtControllerBase
     }
 
     [HttpDelete("{paisId:int}/delete")]
-    public async Task<ActionResult> DeletePais([FromRoute] int paisId)
+    public async Task<ActionResult<SrtGenericResponse>> DeletePais([FromRoute] int paisId)
     {
         return await ExecuteServiceAsync(async () => await paisService.EliminarReactivarPais(paisId, false));
     }
 
     [HttpPatch("{paisId:int}/reactive")]
-    public async Task<ActionResult> ActivePais([FromRoute] int paisId)
+    public async Task<ActionResult<SrtGenericResponse>> ActivePais([FromRoute] int paisId)
     {
         return await ExecuteServiceAsync(async () => await paisService.EliminarReactivarPais(paisId, true));
     }
