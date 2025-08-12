@@ -37,13 +37,13 @@ public class EstadosController(IEstadoService estadoService) : SrtControllerBase
     }
 
     [HttpDelete("{estadoId:int}/delete")]
-    public async Task<ActionResult> DeleteEstado([FromRoute] int estadoId)
+    public async Task<ActionResult<SrtGenericResponse>> DeleteEstado([FromRoute] int estadoId)
     {
         return await ExecuteServiceAsync(async () => await estadoService.EliminarReactivarEstado(estadoId, false));
     }
 
     [HttpPatch("{estadoId:int}/reactive")]
-    public async Task<ActionResult> ActiveEstado([FromRoute] int estadoId)
+    public async Task<ActionResult<SrtGenericResponse>> ActiveEstado([FromRoute] int estadoId)
     {
         return await ExecuteServiceAsync(async () => await estadoService.EliminarReactivarEstado(estadoId, true));
     }

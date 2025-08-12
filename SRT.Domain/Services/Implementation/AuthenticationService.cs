@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -6,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using SRT.Domain.Models.Dtos.Auth;
 using SRT.Domain.Models.Helpers;
 using SRT.Domain.Services.Interface;
+using SRT.Domain.Utils.Exceptions;
 
 namespace SRT.Domain.Services.Implementation;
 
@@ -19,7 +21,7 @@ public class AuthenticationService(IUserService userService, IOptions<AppSetting
         var user = await userService.GetUser(request.User);
         if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Contrasena))
         {
-            return null;
+            throw new SrtException(HttpStatusCode.Unauthorized, "Credenciales invalidas");
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();

@@ -39,14 +39,14 @@ public class LocacionesController(ILocacionesService locacionesService) : SrtCon
     }
 
     [HttpDelete("{locacionId:int}/delete")]
-    public async Task<ActionResult> DeleteLocacion([FromRoute] int locacionId)
+    public async Task<ActionResult<SrtGenericResponse>> DeleteLocacion([FromRoute] int locacionId)
     {
         return await ExecuteServiceAsync(async () =>
             await locacionesService.EliminarReactivarLocacion(locacionId, false));
     }
 
     [HttpPatch("{locacionId:int}/reactive")]
-    public async Task<ActionResult> ActiveLocacion([FromRoute] int locacionId)
+    public async Task<ActionResult<SrtGenericResponse>> ActiveLocacion([FromRoute] int locacionId)
     {
         return await ExecuteServiceAsync(async () =>
             await locacionesService.EliminarReactivarLocacion(locacionId, true));

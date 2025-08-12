@@ -38,14 +38,14 @@ public class VehiculosController(IVehiculosService vehiculosService) : SrtContro
     }
 
     [HttpDelete("{vehiculoId:int}/delete")]
-    public async Task<ActionResult> DeleteVehiculo([FromRoute] int vehiculoId)
+    public async Task<ActionResult<SrtGenericResponse>> DeleteVehiculo([FromRoute] int vehiculoId)
     {
         return await ExecuteServiceAsync(async () =>
             await vehiculosService.EliminarReactivarVehiculo(vehiculoId, false));
     }
 
     [HttpPatch("{vehiculoId:int}/reactive")]
-    public async Task<ActionResult> ActiveVehiculo([FromRoute] int vehiculoId)
+    public async Task<ActionResult<SrtGenericResponse>> ActiveVehiculo([FromRoute] int vehiculoId)
     {
         return await ExecuteServiceAsync(async () =>
             await vehiculosService.EliminarReactivarVehiculo(vehiculoId, true));
