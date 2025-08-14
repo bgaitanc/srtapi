@@ -6,5 +6,5 @@ public class GetVehiculoResponse(Entities.Vehiculos vehiculo)
     public string Placa { get; set; } = vehiculo.Placa;
     public string Modelo { get; set; } = vehiculo.Modelo;
     public int Capacidad { get; set; } = vehiculo.Capacidad;
-    public bool Activo { get; set; } = vehiculo.Activo;
+    public bool? Activo { get; set; } = vehiculo.Activo;
 }

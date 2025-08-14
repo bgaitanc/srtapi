@@ -353,3 +353,10 @@ Authorization: Bearer {{auth_token}}
 PATCH {{SRT_HostAddress}}/api/rutas/1/reactive
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/viajes/all
+GET {{SRT_HostAddress}}/api/viajes/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

@@ -69,4 +69,10 @@ public static class SpConstants
     public const string DeleteOrReactiveRuta = "sp_Eliminar_O_Reactivar_Ruta";
 
     #endregion
+
+    #region MyRegion
+
+    public const string GetAllViajes = "sp_Obtener_Viajes";
+
+    #endregion
 }

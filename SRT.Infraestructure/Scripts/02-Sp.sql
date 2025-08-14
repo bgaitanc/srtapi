@@ -507,7 +507,7 @@ BEGIN
         Modelo            = @Modelo,
         Capacidad         = @Capacidad,
         FechaModificacion = @FechaModificacion,
-        ModificadorID = @ModificadorId
+        ModificadorID     = @ModificadorId
     WHERE VehiculoID = @VehiculoId
 END
 GO
@@ -549,17 +549,16 @@ GO
 CREATE OR ALTER PROCEDURE sp_Obtener_Rutas
 AS
 BEGIN
-    SELECT
-        r.RutaID,
-        r.LocacionOrigenID,
-        lo.Locacion AS LocacionOrigenNombre,
-        r.LocacionDestinoID,
-        ld.Locacion AS LocacionDestinoNombre,
-        r.DistanciaKM,
-        r.TiempoEstimado
+    SELECT r.RutaID,
+           r.LocacionOrigenID,
+           lo.Locacion AS LocacionOrigenNombre,
+           r.LocacionDestinoID,
+           ld.Locacion AS LocacionDestinoNombre,
+           r.DistanciaKM,
+           r.TiempoEstimado
     FROM Rutas r
-    INNER JOIN Locaciones lo ON r.LocacionOrigenID = lo.DestinoID
-    INNER JOIN Locaciones ld ON r.LocacionDestinoID = ld.DestinoID
+             INNER JOIN Locaciones lo ON r.LocacionOrigenID = lo.DestinoID
+             INNER JOIN Locaciones ld ON r.LocacionDestinoID = ld.DestinoID
 END
 GO
 
@@ -647,7 +646,43 @@ GO
 CREATE OR ALTER PROCEDURE sp_Obtener_Viajes
 AS
 BEGIN
-    SELECT * FROM Viajes
+    SELECT v.ViajeID    AS ViajeId,
+           v.RutaID     AS RutaId,
+           v.VehiculoId AS VehiculoId,
+           v.Conductor  AS ConductorId,
+           v.Costo,
+           v.FechaHoraSalida,
+           v.FechaHoraLlegada,
+           v.EstadoID   AS EstadoId,
+           R.RutaID,
+           R.LocacionOrigen,
+           R.LocacionDestino,
+           R.DistanciaKM,
+           R.TiempoEstimado,
+           VH.VehiculoID,
+           VH.Placa,
+           VH.Modelo,
+           VH.Capacidad,
+           C.ConductorID,
+           C.Nombres,
+           C.Apellidos,
+           E.EstadoID,
+           E.Estado
+    FROM Viajes AS V
+             INNER JOIN (SELECT ru.RutaID,
+                                LO.Locacion AS LocacionOrigen,
+                                LD.Locacion AS LocacionDestino,
+                                RU.DistanciaKM,
+                                RU.TiempoEstimado
+                         FROM Rutas AS ru
+                                  INNER JOIN Locaciones AS LO ON ru.LocacionOrigenID = LO.DestinoID
+                                  INNER JOIN Locaciones AS LD ON ru.LocacionDestinoID = LD.DestinoID) AS R
+                        ON v.RutaID = R.RutaID
+             INNER JOIN (SELECT V.VehiculoID, V.Placa, V.Modelo, V.Capacidad FROM Vehiculos AS V) AS VH
+                        ON V.VehiculoID = VH.VehiculoID
+             INNER JOIN (SELECT U.UsuarioID AS ConductorID, U.Nombres, U.Apellidos FROM Usuarios AS U) AS C
+                        ON V.Conductor = C.ConductorID
+             INNER JOIN Estados AS E ON V.EstadoID = E.EstadoID
 END
 GO
 
@@ -685,6 +720,9 @@ BEGIN
     DELETE FROM Viajes WHERE ViajeID = @ViajeID
 END
 GO
+
+-----------------------------------------------------------------------------------------
+
 -------------------------------------------------------------------------------------------------------
 -- Insertar Reserva
 CREATE OR ALTER PROCEDURE sp_Insertar_Reserva @ViajeID INT,
