@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(options =>
     })
     .AddJwtBearer(options =>
     {
-        options.RequireHttpsMetadata = false; //solo para dev/local
+        options.RequireHttpsMetadata = builder.Environment.IsStaging() || builder.Environment.IsProduction();
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {

@@ -323,12 +323,12 @@ END
 GO
 
 -- Eliminar Rol
-CREATE OR ALTER PROCEDURE sp_Eliminar_Rol @RolID INT
-AS
-BEGIN
-    DELETE FROM Roles WHERE RolID = @RolID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_Rol @RolID INT
+-- AS
+-- BEGIN
+--     DELETE FROM Roles WHERE RolID = @RolID
+-- END
+-- GO
 ----------------------------------------------------------------------------------------------
 -- Insertar Usuario
 CREATE OR ALTER PROCEDURE sp_Insertar_Usuario @Nombres VARCHAR(150),
@@ -399,12 +399,12 @@ END
 GO
 
 -- Eliminar Usuario
-CREATE OR ALTER PROCEDURE sp_Eliminar_Usuario @UsuarioID INT
-AS
-BEGIN
-    DELETE FROM Usuarios WHERE UsuarioID = @UsuarioID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_Usuario @UsuarioID INT
+-- AS
+-- BEGIN
+--     DELETE FROM Usuarios WHERE UsuarioID = @UsuarioID
+-- END
+-- GO
 -------------------------------------------------------------------------------------------
 -- Insertar UsuarioRol
 CREATE OR ALTER PROCEDURE sp_Insertar_UsuarioRol @UsuarioID INT,
@@ -442,12 +442,12 @@ END
 GO
 
 -- Eliminar UsuarioRol
-CREATE OR ALTER PROCEDURE sp_Eliminar_UsuarioRol @UsuarioRolID INT
-AS
-BEGIN
-    DELETE FROM UsuarioRoles WHERE UsuarioRolID = @UsuarioRolID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_UsuarioRol @UsuarioRolID INT
+-- AS
+-- BEGIN
+--     DELETE FROM UsuarioRoles WHERE UsuarioRolID = @UsuarioRolID
+-- END
+-- GO
 ----------------------------------------------------------------------------------------------------
 
 -- Insertar Vehículo
@@ -714,12 +714,12 @@ END
 GO
 
 -- Eliminar Viaje
-CREATE OR ALTER PROCEDURE sp_Eliminar_Viaje @ViajeID INT
-AS
-BEGIN
-    DELETE FROM Viajes WHERE ViajeID = @ViajeID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_Viaje @ViajeID INT
+-- AS
+-- BEGIN
+--     DELETE FROM Viajes WHERE ViajeID = @ViajeID
+-- END
+-- GO
 
 -----------------------------------------------------------------------------------------
 
@@ -772,12 +772,12 @@ END
 GO
 
 -- Eliminar Reserva
-CREATE OR ALTER PROCEDURE sp_Eliminar_Reserva @ReservaID INT
-AS
-BEGIN
-    DELETE FROM Reservas WHERE ReservaID = @ReservaID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_Reserva @ReservaID INT
+-- AS
+-- BEGIN
+--     DELETE FROM Reservas WHERE ReservaID = @ReservaID
+-- END
+-- GO
 -------------------------------------------------------------------------------------------------------
 -- Insertar DetalleReserva
 CREATE OR ALTER PROCEDURE sp_Insertar_DetalleReserva @ReservaID INT,
@@ -811,12 +811,12 @@ END
 GO
 
 -- Eliminar DetalleReserva
-CREATE OR ALTER PROCEDURE sp_Eliminar_DetalleReserva @DetalleReservaID INT
-AS
-BEGIN
-    DELETE FROM DetalleReservas WHERE DetalleReservaID = @DetalleReservaID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_DetalleReserva @DetalleReservaID INT
+-- AS
+-- BEGIN
+--     DELETE FROM DetalleReservas WHERE DetalleReservaID = @DetalleReservaID
+-- END
+-- GO
 -----------------------------------------------------------------------------------
 -- Insertar MetodoPago
 CREATE OR ALTER PROCEDURE sp_Insertar_MetodoPago @MetodoPago VARCHAR(50),
@@ -858,12 +858,12 @@ END
 GO
 
 -- Eliminar MetodoPago
-CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPago @MetodoPagoID INT
-AS
-BEGIN
-    DELETE FROM MetodosPago WHERE MetodoPagoID = @MetodoPagoID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPago @MetodoPagoID INT
+-- AS
+-- BEGIN
+--     DELETE FROM MetodosPago WHERE MetodoPagoID = @MetodoPagoID
+-- END
+-- GO
 ------------------------------------------------------------------------------------
 -- Insertar MetodoPagoUsuario
 CREATE OR ALTER PROCEDURE sp_Insertar_MetodoPagoUsuario @MetodoPagoID INT,
@@ -913,12 +913,12 @@ END
 GO
 
 -- Eliminar MetodoPagoUsuario
-CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPagoUsuario @MetodoPagoUsuarioID INT
-AS
-BEGIN
-    DELETE FROM MetodosPagoUsuario WHERE MetodoPagoUsuarioID = @MetodoPagoUsuarioID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPagoUsuario @MetodoPagoUsuarioID INT
+-- AS
+-- BEGIN
+--     DELETE FROM MetodosPagoUsuario WHERE MetodoPagoUsuarioID = @MetodoPagoUsuarioID
+-- END
+-- GO
 -----------------------------------------------------------------------------
 -- Insertar Pago
 CREATE OR ALTER PROCEDURE sp_Insertar_Pago @ReservaID INT,
@@ -971,9 +971,9 @@ END
 GO
 
 -- Eliminar Pago
-CREATE OR ALTER PROCEDURE sp_Eliminar_Pago @PagoID INT
-AS
-BEGIN
-    DELETE FROM Pagos WHERE PagoID = @PagoID
-END
-GO
+-- CREATE OR ALTER PROCEDURE sp_Eliminar_Pago @PagoID INT
+-- AS
+-- BEGIN
+--     DELETE FROM Pagos WHERE PagoID = @PagoID
+-- END
+-- GO

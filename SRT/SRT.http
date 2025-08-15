@@ -20,9 +20,9 @@ Content-Type: application/json
 {
   "nombres": "Brian Antonio",
   "apellidos": "Gaitán Corea",
-  "usuario": "bgaitan2",
-  "contrasena": "mortadela02",
-  "correo": "test2@hotmail.com",
+  "usuario": "bgaitan",
+  "contrasena": "mortadela01",
+  "correo": "test@hotmail.com",
   "telefono": "12345678"
 }
 
