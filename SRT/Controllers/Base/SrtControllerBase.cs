@@ -26,8 +26,7 @@ public class SrtControllerBase : ControllerBase
         }
     }
 
-    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action,
-        HttpStatusCode status = HttpStatusCode.OK)
+    protected async Task<ActionResult<T>> ExecuteServiceAsync<T>(Func<Task<T>> action, HttpStatusCode status = HttpStatusCode.OK, bool returnSuccessOnEmpty = false)
     {
         try
         {
@@ -37,7 +36,7 @@ public class SrtControllerBase : ControllerBase
                 return NoContent();
             }
 
-            if (data == null || data is IEnumerable enumerable && !enumerable.Cast<object>().Any())
+            if (!returnSuccessOnEmpty && (data == null || data is IEnumerable enumerable && !enumerable.Cast<object>().Any()))
             {
                 return GenerateActionResult(new SrtGenericResponse
                 {
@@ -46,12 +45,12 @@ public class SrtControllerBase : ControllerBase
                     Message = "No Data Found"
                 });
             }
-
+ 
             return GenerateActionResult(new SrtGenericResponse
             {
                 StatusCode = status,
                 Success = true,
-                Data = data
+                Data = data!
             });
         }
         catch (SrtException srtEx)
