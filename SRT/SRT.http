@@ -20,9 +20,9 @@ Content-Type: application/json
 {
   "nombres": "Brian Antonio",
   "apellidos": "Gaitán Corea",
-  "usuario": "bgaitan2",
-  "contrasena": "mortadela02",
-  "correo": "test2@hotmail.com",
+  "usuario": "bgaitan",
+  "contrasena": "mortadela01",
+  "correo": "test@hotmail.com",
   "telefono": "12345678"
 }
 
@@ -299,7 +299,7 @@ Authorization: Bearer {{auth_token}}
 ###
 
 # @name api/rutas
-GET {{SRT_HostAddress}}/api/rutas?rutaId=1
+GET {{SRT_HostAddress}}/api/rutas?rutaId=12
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
@@ -351,5 +351,26 @@ Authorization: Bearer {{auth_token}}
 
 # @name api/rutas/{rutaId}/reactive
 PATCH {{SRT_HostAddress}}/api/rutas/1/reactive
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/viajes/all
+GET {{SRT_HostAddress}}/api/viajes/all
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/reservas/detalle
+GET {{SRT_HostAddress}}/api/reservas/detalle?viajeId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/reservas/create
+POST {{SRT_HostAddress}}/api/reservas/create
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}

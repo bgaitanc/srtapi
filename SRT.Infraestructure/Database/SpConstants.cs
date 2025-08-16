@@ -69,4 +69,22 @@ public static class SpConstants
     public const string DeleteOrReactiveRuta = "sp_Eliminar_O_Reactivar_Ruta";
 
     #endregion
+
+    #region Viajes
+
+    public const string GetAllViajes = "sp_Obtener_Viajes";
+
+    #endregion
+    
+    #region Reservas
+    
+    public const string InsertReserva = "sp_Insertar_Reserva";
+    
+    #endregion
+    
+    #region DetalleReservas
+    
+    public const string GetDetalleReservasByParams = "sp_Obtener_DetalleReservas_By_Params";
+    public const string InsertDetalleReserva = "sp_Insertar_DetalleReserva";
+    #endregion
 }

@@ -322,14 +322,8 @@ BEGIN
 END
 GO
 
--- Eliminar Rol
-CREATE OR ALTER PROCEDURE sp_Eliminar_Rol @RolID INT
-AS
-BEGIN
-    DELETE FROM Roles WHERE RolID = @RolID
-END
-GO
 ----------------------------------------------------------------------------------------------
+
 -- Insertar Usuario
 CREATE OR ALTER PROCEDURE sp_Insertar_Usuario @Nombres VARCHAR(150),
                                               @Apellidos VARCHAR(150),
@@ -398,14 +392,8 @@ BEGIN
 END
 GO
 
--- Eliminar Usuario
-CREATE OR ALTER PROCEDURE sp_Eliminar_Usuario @UsuarioID INT
-AS
-BEGIN
-    DELETE FROM Usuarios WHERE UsuarioID = @UsuarioID
-END
-GO
 -------------------------------------------------------------------------------------------
+
 -- Insertar UsuarioRol
 CREATE OR ALTER PROCEDURE sp_Insertar_UsuarioRol @UsuarioID INT,
                                                  @RolID INT,
@@ -441,13 +429,6 @@ BEGIN
 END
 GO
 
--- Eliminar UsuarioRol
-CREATE OR ALTER PROCEDURE sp_Eliminar_UsuarioRol @UsuarioRolID INT
-AS
-BEGIN
-    DELETE FROM UsuarioRoles WHERE UsuarioRolID = @UsuarioRolID
-END
-GO
 ----------------------------------------------------------------------------------------------------
 
 -- Insertar Vehículo
@@ -507,7 +488,7 @@ BEGIN
         Modelo            = @Modelo,
         Capacidad         = @Capacidad,
         FechaModificacion = @FechaModificacion,
-        ModificadorID = @ModificadorId
+        ModificadorID     = @ModificadorId
     WHERE VehiculoID = @VehiculoId
 END
 GO
@@ -549,17 +530,16 @@ GO
 CREATE OR ALTER PROCEDURE sp_Obtener_Rutas
 AS
 BEGIN
-    SELECT
-        r.RutaID,
-        r.LocacionOrigenID,
-        lo.Locacion AS LocacionOrigenNombre,
-        r.LocacionDestinoID,
-        ld.Locacion AS LocacionDestinoNombre,
-        r.DistanciaKM,
-        r.TiempoEstimado
+    SELECT r.RutaID,
+           r.LocacionOrigenID,
+           lo.Locacion AS LocacionOrigenNombre,
+           r.LocacionDestinoID,
+           ld.Locacion AS LocacionDestinoNombre,
+           r.DistanciaKM,
+           r.TiempoEstimado
     FROM Rutas r
-    INNER JOIN Locaciones lo ON r.LocacionOrigenID = lo.DestinoID
-    INNER JOIN Locaciones ld ON r.LocacionDestinoID = ld.DestinoID
+             INNER JOIN Locaciones lo ON r.LocacionOrigenID = lo.DestinoID
+             INNER JOIN Locaciones ld ON r.LocacionDestinoID = ld.DestinoID
 END
 GO
 
@@ -647,7 +627,43 @@ GO
 CREATE OR ALTER PROCEDURE sp_Obtener_Viajes
 AS
 BEGIN
-    SELECT * FROM Viajes
+    SELECT v.ViajeID    AS ViajeId,
+           v.RutaID     AS RutaId,
+           v.VehiculoId AS VehiculoId,
+           v.Conductor  AS ConductorId,
+           v.Costo,
+           v.FechaHoraSalida,
+           v.FechaHoraLlegada,
+           v.EstadoID   AS EstadoId,
+           R.RutaID,
+           R.LocacionOrigen,
+           R.LocacionDestino,
+           R.DistanciaKM,
+           R.TiempoEstimado,
+           VH.VehiculoID,
+           VH.Placa,
+           VH.Modelo,
+           VH.Capacidad,
+           C.ConductorID,
+           C.Nombres,
+           C.Apellidos,
+           E.EstadoID,
+           E.Estado
+    FROM Viajes AS V
+             INNER JOIN (SELECT ru.RutaID,
+                                LO.Locacion AS LocacionOrigen,
+                                LD.Locacion AS LocacionDestino,
+                                RU.DistanciaKM,
+                                RU.TiempoEstimado
+                         FROM Rutas AS ru
+                                  INNER JOIN Locaciones AS LO ON ru.LocacionOrigenID = LO.DestinoID
+                                  INNER JOIN Locaciones AS LD ON ru.LocacionDestinoID = LD.DestinoID) AS R
+                        ON v.RutaID = R.RutaID
+             INNER JOIN (SELECT V.VehiculoID, V.Placa, V.Modelo, V.Capacidad FROM Vehiculos AS V) AS VH
+                        ON V.VehiculoID = VH.VehiculoID
+             INNER JOIN (SELECT U.UsuarioID AS ConductorID, U.Nombres, U.Apellidos FROM Usuarios AS U) AS C
+                        ON V.Conductor = C.ConductorID
+             INNER JOIN Estados AS E ON V.EstadoID = E.EstadoID
 END
 GO
 
@@ -678,29 +694,20 @@ BEGIN
 END
 GO
 
--- Eliminar Viaje
-CREATE OR ALTER PROCEDURE sp_Eliminar_Viaje @ViajeID INT
-AS
-BEGIN
-    DELETE FROM Viajes WHERE ViajeID = @ViajeID
-END
-GO
 -------------------------------------------------------------------------------------------------------
+
 -- Insertar Reserva
-CREATE OR ALTER PROCEDURE sp_Insertar_Reserva @ViajeID INT,
-                                              @ClienteID INT,
+CREATE OR ALTER PROCEDURE sp_Insertar_Reserva @ViajeId INT,
+                                              @ClienteId INT,
                                               @FechaReserva DATETIME,
                                               @FechaCreacion DATETIME,
-                                              @FechaModificacion DATETIME,
                                               @CreadorID INT,
-                                              @ModificadorID INT,
-                                              @EstadoID INT
+                                              @EstadoId INT
 AS
 BEGIN
-    INSERT INTO Reservas (ViajeID, ClienteID, FechaReserva, FechaCreacion, FechaModificacion,
-                          CreadorID, ModificadorID, EstadoID)
-    VALUES (@ViajeID, @ClienteID, @FechaReserva, @FechaCreacion, @FechaModificacion,
-            @CreadorID, @ModificadorID, @EstadoID)
+    INSERT INTO Reservas (ViajeID, ClienteID, FechaReserva, FechaCreacion, CreadorID, EstadoID)
+    VALUES (@ViajeId, @ClienteId, @FechaReserva, @FechaCreacion, @CreadorID, @EstadoID);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
@@ -733,21 +740,16 @@ BEGIN
 END
 GO
 
--- Eliminar Reserva
-CREATE OR ALTER PROCEDURE sp_Eliminar_Reserva @ReservaID INT
-AS
-BEGIN
-    DELETE FROM Reservas WHERE ReservaID = @ReservaID
-END
-GO
 -------------------------------------------------------------------------------------------------------
+
 -- Insertar DetalleReserva
-CREATE OR ALTER PROCEDURE sp_Insertar_DetalleReserva @ReservaID INT,
+CREATE OR ALTER PROCEDURE sp_Insertar_DetalleReserva @ReservaId INT,
                                                      @NumeroAsiento INT
 AS
 BEGIN
     INSERT INTO DetalleReservas (ReservaID, NumeroAsiento)
-    VALUES (@ReservaID, @NumeroAsiento)
+    VALUES (@ReservaID, @NumeroAsiento);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
@@ -758,6 +760,20 @@ BEGIN
     SELECT * FROM DetalleReservas
 END
 GO
+
+-- Obtener DetalleReservas by Params
+CREATE OR ALTER PROCEDURE sp_Obtener_DetalleReservas_By_Params @ViajeId INT
+AS
+BEGIN
+    SELECT V.ViajeID AS ViajeId, Vh.Capacidad AS Capacidad, DR.NumeroAsiento AS AsientosReservados
+    FROM Viajes AS V
+             INNER JOIN Vehiculos AS VH ON V.VehiculoID = VH.VehiculoID
+             LEFT JOIN Reservas AS R ON V.ViajeID = R.ViajeID
+             LEFT JOIN DetalleReservas AS DR ON R.ReservaID = DR.ReservaID
+    WHERE V.ViajeID = @ViajeId
+END
+GO
+
 
 -- Actualizar DetalleReserva
 CREATE OR ALTER PROCEDURE sp_Actualizar_DetalleReserva @DetalleReservaID INT,
@@ -772,14 +788,8 @@ BEGIN
 END
 GO
 
--- Eliminar DetalleReserva
-CREATE OR ALTER PROCEDURE sp_Eliminar_DetalleReserva @DetalleReservaID INT
-AS
-BEGIN
-    DELETE FROM DetalleReservas WHERE DetalleReservaID = @DetalleReservaID
-END
-GO
 -----------------------------------------------------------------------------------
+
 -- Insertar MetodoPago
 CREATE OR ALTER PROCEDURE sp_Insertar_MetodoPago @MetodoPago VARCHAR(50),
                                                  @FechaCreacion DATETIME,
@@ -819,14 +829,8 @@ BEGIN
 END
 GO
 
--- Eliminar MetodoPago
-CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPago @MetodoPagoID INT
-AS
-BEGIN
-    DELETE FROM MetodosPago WHERE MetodoPagoID = @MetodoPagoID
-END
-GO
 ------------------------------------------------------------------------------------
+
 -- Insertar MetodoPagoUsuario
 CREATE OR ALTER PROCEDURE sp_Insertar_MetodoPagoUsuario @MetodoPagoID INT,
                                                         @UsuarioID INT,
@@ -874,14 +878,8 @@ BEGIN
 END
 GO
 
--- Eliminar MetodoPagoUsuario
-CREATE OR ALTER PROCEDURE sp_Eliminar_MetodoPagoUsuario @MetodoPagoUsuarioID INT
-AS
-BEGIN
-    DELETE FROM MetodosPagoUsuario WHERE MetodoPagoUsuarioID = @MetodoPagoUsuarioID
-END
-GO
 -----------------------------------------------------------------------------
+
 -- Insertar Pago
 CREATE OR ALTER PROCEDURE sp_Insertar_Pago @ReservaID INT,
                                            @FechaPago DATETIME,
@@ -929,13 +927,5 @@ BEGIN
         ModificadorID       = @ModificadorID,
         EstadoID            = @EstadoID
     WHERE PagoID = @PagoID
-END
-GO
-
--- Eliminar Pago
-CREATE OR ALTER PROCEDURE sp_Eliminar_Pago @PagoID INT
-AS
-BEGIN
-    DELETE FROM Pagos WHERE PagoID = @PagoID
 END
 GO

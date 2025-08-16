@@ -6,5 +6,7 @@ public class BaseEntity
     public DateTime FechaModificacion { get; set; }
     public int CreadorID { get; set; }
     public int ModificadorID { get; set; }
-    public bool Activo { get; set; }
+    public bool? Activo { get; set; }
+
+    public int? EstadoID { get; set; }
 }
