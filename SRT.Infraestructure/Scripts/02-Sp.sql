@@ -305,6 +305,18 @@ BEGIN
 END
 GO
 
+-- Obtener Roles By Params
+CREATE OR ALTER PROCEDURE sp_Obtener_Roles_By_Params @UserId INT
+AS
+BEGIN
+    SELECT U.UsuarioID AS UsuarioId, R.Rol AS Rol
+    FROM Usuarios AS U
+             LEFT JOIN UsuarioRoles AS UR ON U.UsuarioID = UR.UsuarioID
+             LEFT JOIN Roles AS R ON UR.RolID = R.RolID
+    WHERE U.UsuarioID = @UserId
+END
+GO
+
 -- Actualizar Rol
 CREATE OR ALTER PROCEDURE sp_Actualizar_Rol @RolID INT,
                                             @Rol VARCHAR(255),

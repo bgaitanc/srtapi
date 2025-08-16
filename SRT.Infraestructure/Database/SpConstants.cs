@@ -9,6 +9,12 @@ public static class SpConstants
     public const string GetUserByUserNameAndEmail = "sp_Obtener_Usuarios_username_email";
 
     #endregion
+    
+    #region UserRoles
+
+    public const string GetUserRolesByParams = "sp_Obtener_Roles_By_Params";
+
+    #endregion
 
     #region Estados
 

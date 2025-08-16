@@ -11,7 +11,7 @@ public class UserRepository(SrtConnection srtConnection) : Repository<User>(srtC
     public async Task<User?> GetUserByUserName(string username)
     {
         // TODO Agregar transacciones (TransactionManager)
-        return await GetFirstOrDefaultAsync(SpConstants.GetUserByUserName, new { Username = username });
+        return await GetFirstOrDefaultSpAsync(SpConstants.GetUserByUserName, new { Username = username });
     }
 
     public async Task<User?> GetUserByUserNameAndEmail(string username, string email)
