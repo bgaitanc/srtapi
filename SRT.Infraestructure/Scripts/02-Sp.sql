@@ -615,28 +615,27 @@ GO
 --------------------------------------------------------------------------------------------------
 
 -- Insertar Viaje
-CREATE OR ALTER PROCEDURE sp_Insertar_Viaje @RutaID INT,
-                                            @VehiculoID INT,
-                                            @Conductor INT,
+CREATE OR ALTER PROCEDURE sp_Insertar_Viaje @RutaId INT,
+                                            @VehiculoId INT,
+                                            @ConductorId INT,
                                             @Costo DECIMAL(18, 2),
                                             @FechaHoraSalida DATETIME,
                                             @FechaHoraLlegada DATETIME,
                                             @FechaCreacion DATETIME,
-                                            @FechaModificacion DATETIME,
-                                            @CreadorID INT,
-                                            @ModificadorID INT,
-                                            @EstadoID INT
+                                            @CreadorId INT,
+                                            @EstadoId INT
 AS
 BEGIN
-    INSERT INTO Viajes (RutaID, VehiculoID, Conductor, Costo, FechaHoraSalida, FechaHoraLlegada,
-                        FechaCreacion, FechaModificacion, CreadorID, ModificadorID, EstadoID)
-    VALUES (@RutaID, @VehiculoID, @Conductor, @Costo, @FechaHoraSalida, @FechaHoraLlegada,
-            @FechaCreacion, @FechaModificacion, @CreadorID, @ModificadorID, @EstadoID)
+    INSERT INTO Viajes (RutaID, VehiculoID, Conductor, Costo, FechaHoraSalida, FechaHoraLlegada, FechaCreacion,
+                        CreadorID, EstadoID)
+    VALUES (@RutaId, @VehiculoId, @ConductorId, @Costo, @FechaHoraSalida, @FechaHoraLlegada, @FechaCreacion, @CreadorId,
+            @EstadoId);
+    SELECT SCOPE_IDENTITY();
 END
 GO
 
 -- Obtener Viajes
-CREATE OR ALTER PROCEDURE sp_Obtener_Viajes
+CREATE OR ALTER PROCEDURE sp_Obtener_Viajes @ViajeId INT = NULL
 AS
 BEGIN
     SELECT v.ViajeID    AS ViajeId,
@@ -676,6 +675,9 @@ BEGIN
              INNER JOIN (SELECT U.UsuarioID AS ConductorID, U.Nombres, U.Apellidos FROM Usuarios AS U) AS C
                         ON V.Conductor = C.ConductorID
              INNER JOIN Estados AS E ON V.EstadoID = E.EstadoID
+    WHERE @ViajeId IS NULL
+       OR V.ViajeID = @ViajeId
+
 END
 GO
 
@@ -723,11 +725,14 @@ BEGIN
 END
 GO
 
--- Obtener Reservas
-CREATE OR ALTER PROCEDURE sp_Obtener_Reservas
+-- sp_Obtener_Reservas_By_Params
+CREATE OR ALTER PROCEDURE sp_Obtener_Reservas_By_Params @UserId INT
 AS
 BEGIN
-    SELECT * FROM Reservas
+    SELECT R.ReservaID AS ReservaId, R.ViajeID AS ViajeId, R.FechaReserva, DR.NumeroAsiento
+    FROM Reservas AS R
+             INNER JOIN dbo.DetalleReservas DR ON R.ReservaID = DR.ReservaID
+    WHERE R.ClienteID = @UserId
 END
 GO
 

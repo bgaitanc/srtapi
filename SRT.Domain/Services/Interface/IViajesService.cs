@@ -5,4 +5,5 @@ namespace SRT.Domain.Services.Interface;
 public interface IViajesService
 {
     Task<IEnumerable<GetViajesResponse>> GetViajes();
+    Task<CreateViajeResponse> CreateViaje(CreateViajeRequest request);
 }

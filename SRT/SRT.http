@@ -363,8 +363,31 @@ Authorization: Bearer {{auth_token}}
 
 ###
 
+# @name api/viajes/create
+POST {{SRT_HostAddress}}/api/viajes/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "rutaId": 1,
+  "vehiculoId": 1,
+  "conductorId": 1,
+  "costo": 120,
+  "FechaHoraSalida": "2025-08-01",
+  "FechaHoraLlegada": "2025-08-01"
+}
+
+###
+
 # @name api/reservas/detalle
 GET {{SRT_HostAddress}}/api/reservas/detalle?viajeId=1
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# @name api/reservas/user?userId=1
+GET {{SRT_HostAddress}}/api/reservas/user?userId=1
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 

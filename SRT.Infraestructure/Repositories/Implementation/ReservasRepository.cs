@@ -23,4 +23,22 @@ public class ReservasRepository(SrtConnection srtConnection) : Repository<Reserv
 
         return await ExecSpAsync(SpConstants.InsertReserva, dataToSave);
     }
+
+    public async Task<IEnumerable<GetReservasResponse>> GetReservaByUserId(int userId)
+    {
+        var result =
+            await QuerySpAsync<GetReservasQueryResponse>(SpConstants.GetReservasByParams, new { UserId = userId });
+        var listData = result.ToList();
+        if (listData.Count == 0)
+            return new List<GetReservasResponse>();
+
+        return listData.GroupBy(x => new { x.ReservaId, x.ViajeId })
+            .Select(g => new GetReservasResponse
+            {
+                ReservaId = g.Key.ReservaId,
+                ViajeId = g.Key.ViajeId,
+                FechaReserva = g.First().FechaReserva,
+                Detalle = g.Select(x => x.NumeroAsiento).ToList()
+            });
+    }
 }

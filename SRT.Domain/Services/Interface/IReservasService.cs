@@ -4,5 +4,6 @@ namespace SRT.Domain.Services.Interface;
 
 public interface IReservasService
 {
-    Task<CreateReservaResponse> CreateReserva(CreateReservaRequest request);
+    Task<GetReservaInfoResponse> CreateReserva(CreateReservaRequest request);
+    Task<IEnumerable<GetReservaInfoResponse>> GetDetalleReservasByUserId(int userId);
 }

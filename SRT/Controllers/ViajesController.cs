@@ -16,4 +16,10 @@ public class ViajesController(IViajesService viajesService) : SrtControllerBase
     {
         return await ExecuteServiceAsync(async () => await viajesService.GetViajes());
     }
+    
+    [HttpGet("create")]
+    public async Task<ActionResult<CreateViajeResponse>> GetViajes([FromBody] CreateViajeRequest request)
+    {
+        return await ExecuteServiceAsync(async () => await viajesService.CreateViaje(request));
+    }
 }

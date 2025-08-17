@@ -79,13 +79,15 @@ public static class SpConstants
     #region Viajes
 
     public const string GetAllViajes = "sp_Obtener_Viajes";
+    public const string InsertViaje = "sp_Insertar_Viaje";
 
     #endregion
     
     #region Reservas
     
     public const string InsertReserva = "sp_Insertar_Reserva";
-    
+    public const string GetReservasByParams = "sp_Obtener_Reservas_By_Params";
+
     #endregion
     
     #region DetalleReservas

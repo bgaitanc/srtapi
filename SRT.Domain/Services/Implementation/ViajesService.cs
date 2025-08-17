@@ -11,4 +11,20 @@ public class ViajesService(IViajesRepository viajesRepository) : IViajesService
         var response = await viajesRepository.GetViajes();
         return response;
     }
+
+    public async Task<CreateViajeResponse> CreateViaje(CreateViajeRequest request)
+    {
+        var result = await viajesRepository.CreateViaje(request);
+
+        return new CreateViajeResponse
+        {
+            ViajeId = result,
+            RutaId = request.RutaId,
+            VehiculoId = request.VehiculoId,
+            ConductorId = request.ConductorId,
+            Costo = request.Costo,
+            FechaHoraSalida = request.FechaHoraSalida,
+            FechaHoraLlegada = request.FechaHoraLlegada
+        };
+    }
 }

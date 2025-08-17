@@ -9,7 +9,7 @@ namespace SRT.Infraestructure.Repositories.Implementation;
 
 public class ViajesRepository(SrtConnection srtConnection) : Repository<Viajes>(srtConnection), IViajesRepository
 {
-    public async Task<IEnumerable<GetViajesResponse>> GetViajes()
+    public async Task<IEnumerable<GetViajesResponse>> GetViajes(int? viajeId = null)
     {
         return await QueryMultipleSpAsync(SpConstants.GetAllViajes, [
             typeof(GetViajesResponse),
@@ -17,7 +17,7 @@ public class ViajesRepository(SrtConnection srtConnection) : Repository<Viajes>(
             typeof(VehiculoInfo),
             typeof(ConductorInfo),
             typeof(Estados)
-        ], MapAction(), "RutaID,VehiculoID,ConductorID,EstadoID");
+        ], MapAction(), "RutaID,VehiculoID,ConductorID,EstadoID", new { ViajeId = viajeId });
 
         Func<object[], GetViajesResponse> MapAction()
         {
@@ -34,8 +34,28 @@ public class ViajesRepository(SrtConnection srtConnection) : Repository<Viajes>(
         }
     }
 
-    public Task<Vehiculos?> GetVehiculoByParams(GetVehiculoRequest request)
+    public async Task<GetViajesResponse?> GetViajeById(int viajeId)
     {
-        throw new NotImplementedException();
+        var result = await GetViajes(viajeId);
+        return result.FirstOrDefault();
+    }
+
+    public async Task<int> CreateViaje(CreateViajeRequest request)
+    {
+        var date = DateTime.Now;
+        var dataToSave = new
+        {
+            request.RutaId,
+            request.VehiculoId,
+            request.ConductorId,
+            request.Costo,
+            request.FechaHoraLlegada,
+            request.FechaHoraSalida,
+            EstadoId = 4, //Pendiente?
+            FechaCreacion = date,
+            CreadorId = default(int?)
+        };
+
+        return await ExecSpAsync(SpConstants.InsertViaje, dataToSave);
     }
 }
