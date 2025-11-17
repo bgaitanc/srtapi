@@ -4,9 +4,17 @@ namespace SRT.Domain.Repositories.Interface.Base;
 
 public interface IRepository<T> where T : BaseEntity
 {
-    Task<IEnumerable<T>> QuerySpAsync(string sql, object? param = null);
-    Task<T?> GetFirstOrDefaultSpAsync(string sql, object? param = null);
-    Task<int> ExecSpAsync(string sql, object? param = null);
-    Task<T?> GetFirstOrDefaultAsync(string sql, object? param = null);
-    Task<int> ExecAsync(string sql, object? param = null);
+    IQueryable<T> GetAll();
+
+    IQueryable<T> GetAllTracking();
+
+    Task<T?> GetByIdAsync(Guid id);
+
+    Task<T?> GetByIdTrackingAsync(Guid id);
+
+    Task<T> CreateAsync(T entity);
+
+    Task<T> UpdateAsync(T entity);
+
+    Task DeleteAsync(T entity);
 }

@@ -3,7 +3,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SRT.Controllers.Base;
-using SRT.Domain.Entities;
 using SRT.Domain.Models.Dtos.Auth;
 using SRT.Domain.Models.Dtos.Users;
 using SRT.Domain.Services.Interface;
@@ -26,7 +25,7 @@ public class UsersController(IUserService userService) : SrtControllerBase
     public async Task<ActionResult<UserInfoResponse>> GetUserInfo()
     {
         var user = User.FindFirst(ClaimTypes.Name)?.Value;
-        
+
         return (await ExecuteServiceAsync(async () => await userService.GetUserInfo(user!)))!;
     }
 }

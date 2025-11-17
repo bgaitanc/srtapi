@@ -2,6 +2,6 @@
 
 public class RegisterUserResponse
 {
-    public int UserId { get; set; }
-    public required string UserName { get; set; }
+    public required Guid Id { get; set; }
+    public required string Username { get; set; }
 }

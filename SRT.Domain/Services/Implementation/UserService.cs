@@ -6,20 +6,13 @@ using SRT.Domain.Services.Interface;
 
 namespace SRT.Domain.Services.Implementation;
 
-public class UserService : IUserService
+public class UserService(IUserRepository userRepository) : IUserService
 {
-    private readonly IUserRepository _userRepository;
-
-    public UserService(IUserRepository userRepository)
-    {
-        _userRepository = userRepository;
-    }
-
     public async Task<User?> GetUser(string username)
     {
-        return await _userRepository.GetUserByUserName(username);
+        return await userRepository.GetUserByUsername(username);
     }
-    
+
     public async Task<UserInfoResponse> GetUserInfo(string username)
     {
         var user = await GetUser(username);
@@ -28,14 +21,32 @@ public class UserService : IUserService
 
     public async Task<RegisterUserResponse> Register(RegisterUserRequest request)
     {
-        // TODO: se debe validar datos requeridos, considerar fluent validations o
-        // el mapper nativo de los controladores ya puede controlar esto,
-        // verificar lenguaje de los mensajes
-        var users = await _userRepository.GetUserByUserNameAndEmail(request.Usuario, request.Correo);
+        // TODO: Required data must be validated, consider fluent validations or
+        // the native mapper of the controllers can already control this,
+        // verify the language of the messages.
+        var users = await userRepository.GetUserByUsernameAndEmail(request.Username, request.Email);
 
-        if (users is null) return await _userRepository.RegisterUser(request);
+        if (users is null)
+        {
+            //TODO AutoMapper????
+            var newUser = new User
+            {
+                Name = request.Name,
+                Surname = request.Surname,
+                Username = request.Username,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Email = request.Email
+            };
 
-        if (users.Usuario == request.Usuario)
+            var result = await userRepository.CreateAsync(newUser);
+            return new RegisterUserResponse
+            {
+                Id = result.Id,
+                Username = request.Username
+            };
+        }
+
+        if (users.Username == request.Username)
         {
             throw new Exception("Usuario ya existe");
         }

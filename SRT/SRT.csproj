@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.11">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -18,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SRT.Infraestructure\SRT.Infraestructure.csproj" />
+      <ProjectReference Include="..\SRT.Infrastructure\SRT.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

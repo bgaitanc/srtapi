@@ -36,6 +36,7 @@ public class SrtControllerBase : ControllerBase
                 return NoContent();
             }
 
+            //TODO esto es necesario? se podría enviar el arreglo vacío
             if (!returnSuccessOnEmpty && (data == null || data is IEnumerable enumerable && !enumerable.Cast<object>().Any()))
             {
                 return GenerateActionResult(new SrtGenericResponse

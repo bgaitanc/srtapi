@@ -13,29 +13,32 @@ using SRT.Domain.Utils.Exceptions;
 
 namespace SRT.Domain.Services.Implementation;
 
-public class AuthenticationService(IUserService userService, IUsuarioRolesService usuarioRolesService, IOptions<AppSettings> appSettings)
+public class AuthenticationService(
+    IUserService userService,
+    IUserRolService userRolService,
+    IOptions<AppSettings> appSettings)
     : IAuthenticationService
 {
     private readonly AppSettings _appSettings = appSettings.Value;
 
-    public async Task<AuthenticationResponse?> GenerateToken(AuthenticationRequest request)
+    public async Task<AuthenticationResponse> GenerateToken(AuthenticationRequest request)
     {
-        var user = await userService.GetUser(request.User);
-        if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Contrasena))
+        var user = await userService.GetUser(request.Username);
+        if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
         {
             throw new SrtException(HttpStatusCode.Unauthorized, "Credenciales invalidas");
         }
 
-        var roles = await usuarioRolesService.GetRolesUsuario(user.UsuarioID);
-        
+        var roles = await userRolService.GetUserRoles(user.Id);
+
         var tokenHandler = new JwtSecurityTokenHandler();
         var secret = Encoding.ASCII.GetBytes(_appSettings.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity([
-                new Claim(ClaimTypes.Name, user.Usuario),
-                new Claim(ClaimTypes.NameIdentifier, user.UsuarioID.ToString()),
-                new Claim(CustomClaimTypes.Roles, JsonSerializer.Serialize(roles.Roles))
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(CustomClaimTypes.Roles, JsonSerializer.Serialize(roles?.Roles ?? new List<string>()))
             ]),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials =

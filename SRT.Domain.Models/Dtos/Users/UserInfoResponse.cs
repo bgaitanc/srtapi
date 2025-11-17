@@ -4,10 +4,10 @@ namespace SRT.Domain.Models.Dtos.Users;
 
 public class UserInfoResponse(User user)
 {
-    public int UsuarioId { get; set; } = user.UsuarioID;
-    public string Nombres { get; set; } = user.Nombres;
-    public string Apellidos { get; set; } = user.Apellidos;
-    public string Usuario { get; set; } = user.Usuario;
-    public string Correo { get; set; } = user.Correo;
-    public string Telefono { get; set; } = user.Telefono;
+    public Guid Id { get; set; } = user.Id;
+    public string Name { get; set; } = user.Name;
+    public string Surname { get; set; } = user.Surname;
+    public string Username { get; set; } = user.Username;
+    public string Email { get; set; } = user.Email;
+    public string? PhoneNumber { get; set; } = user.PhoneNumber;
 }

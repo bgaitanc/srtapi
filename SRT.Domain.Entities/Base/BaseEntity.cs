@@ -2,11 +2,14 @@
 
 public class BaseEntity
 {
-    public DateTime FechaCreacion { get; set; }
-    public DateTime FechaModificacion { get; set; }
-    public int CreadorID { get; set; }
-    public int ModificadorID { get; set; }
-    public bool? Activo { get; set; }
+    public Guid Id { get; set; }
 
-    public int? EstadoID { get; set; }
+    public DateTime CreatedAt { get; set; }
+
+    //TODO: createdBy and updatedBy should be Guid?
+    public string? CreatedBy { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
+    public string? UpdatedBy { get; set; }
 }

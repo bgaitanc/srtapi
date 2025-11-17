@@ -10,7 +10,7 @@ namespace SRT.Controllers;
 public class AuthenticationController(IAuthenticationService authenticationService) : SrtControllerBase
 {
     [HttpPost("login")]
-    public async Task<ActionResult<AuthenticationResponse?>> Authenticate([FromBody] AuthenticationRequest request)
+    public async Task<ActionResult<AuthenticationResponse>> Authenticate([FromBody] AuthenticationRequest request)
     {
         return await ExecuteServiceAsync(async () => await authenticationService.GenerateToken(request));
     }

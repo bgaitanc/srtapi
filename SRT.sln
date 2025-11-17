@@ -6,13 +6,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{E142DD1B-8AB6-48F9-A4D0-45D4191DB01E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{DF971CEC-8813-4E4C-9EEE-8D9457AB066B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DF971CEC-8813-4E4C-9EEE-8D9457AB066B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRT.Domain", "SRT.Domain\SRT.Domain.csproj", "{70B39339-E4A0-4681-8174-4869D5AF11E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRT.Domain.Entities", "SRT.Domain.Entities\SRT.Domain.Entities.csproj", "{C1083161-2F81-40DB-929D-3AF3D78A9522}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRT.Infraestructure", "SRT.Infraestructure\SRT.Infraestructure.csproj", "{99932CE6-762E-4E4C-80BA-6A5544EF4F18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRT.Infrastructure", "SRT.Infrastructure\SRT.Infrastructure.csproj", "{99932CE6-762E-4E4C-80BA-6A5544EF4F18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRT.Domain.Models", "SRT.Domain.Models\SRT.Domain.Models.csproj", "{C45BD3FD-2229-4E9F-8FA7-01E318E513EA}"
 EndProject

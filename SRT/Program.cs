@@ -1,15 +1,14 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SRT.Dependency;
 using SRT.Domain.Models.Helpers;
+using SRT.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
@@ -38,6 +37,13 @@ builder.Services.AddAuthentication(options =>
             ClockSkew = TimeSpan.Zero
         };
     });
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<SrtDbContext>(options => options.UseNpgsql(connectionString, opts =>
+{
+    opts.MigrationsAssembly(typeof(SrtDbContext).Assembly.GetName().Name);
+    opts.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+}));
 
 //DI
 builder.Services.ConfigureAppServices();
