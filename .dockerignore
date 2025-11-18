@@ -21,5 +21,7 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/*.http
+**/*.env.json
 LICENSE
 README.md

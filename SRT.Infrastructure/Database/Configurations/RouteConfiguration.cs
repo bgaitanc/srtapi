@@ -21,7 +21,7 @@ public class RouteConfiguration : IEntityTypeConfiguration<Route>
         builder.ToTable(t => t.HasCheckConstraint("CK_Route_FinalDestinationId_uuid", $"\"FinalDestinationId\" <> '{Guid.Empty}'"));
         builder.ToTable(t => t.HasCheckConstraint("CK_Route_DistanceInKm_numeric", "\"DistanceInKm\" > 0"));
         builder.ToTable(t => t.HasCheckConstraint("CK_Route_EstimatedTime_interval", "\"EstimatedTime\" > interval '1 minute'"));
-        builder.HasOne(r => r.OriginDestination).WithMany().HasForeignKey(x => x.OriginDestinationId);
-        builder.HasOne(r => r.FinalDestination).WithMany().HasForeignKey(x => x.FinalDestinationId);
+        builder.HasOne(r => r.OriginDestination).WithMany(r => r.OriginRoutes).HasForeignKey(x => x.OriginDestinationId);
+        builder.HasOne(r => r.FinalDestination).WithMany(r => r.FinalRoutes).HasForeignKey(x => x.FinalDestinationId);
     }
 }

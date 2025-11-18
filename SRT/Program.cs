@@ -76,4 +76,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+var executeMigrations = builder.Configuration.GetValue<bool>("ExecuteMigrations");
+
+if (executeMigrations)
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<SrtDbContext>();
+    db.Database.Migrate();
+}
+
 app.Run();
