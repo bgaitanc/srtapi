@@ -49,13 +49,26 @@ builder.Services.AddDbContext<SrtDbContext>(options => options.UseNpgsql(connect
 builder.Services.ConfigureAppServices();
 builder.Services.ConfigureAppRepositories();
 
+var allowedOrigins = builder.Configuration["AllowedOrigins"]?
+    .Split(';', StringSplitOptions.RemoveEmptyEntries);
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        b => b.WithOrigins("http://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials());
+        b =>
+        {
+            if (allowedOrigins is { Length: > 0 })
+            {
+                b.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            }
+            else
+            {
+                b.WithOrigins("http://localhost:3000");
+            }
+        });
 });
 
 var app = builder.Build();
