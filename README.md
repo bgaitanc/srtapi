@@ -75,14 +75,16 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 
 ### ToDo's
 
-- [ ] Migración a postgres y entity framework
-- [ ] Agregar status a reservas y viajes
+- [X] Migración a postgres y entity framework
+- [X] Agregar status a reservas y viajes
 - [ ] Completar info de conductor y demás en endpoint /api/reservations/user
 - [ ] Agregar catálogos de marca / modelo de vehículos
 - [ ] Implementación de Roles
 - [ ] Completar documentacion de endpoints en apidog
 - [ ] Actualizar documentación en Readme considerando la migración
 - [ ] Refresh tokens
+- [ ] Centralizar y completar mensajes de información y error de endpoints
+- [ ] Actualizar docker compose
 - [X] Registro y Login de Usuarios
 - [X] JWT Token
 - [X] CRUD Estados
