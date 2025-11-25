@@ -1,4 +1,5 @@
 ﻿using SRT.Domain.Entities;
+using SRT.Domain.Entities.Identity;
 
 namespace SRT.Domain.Models.Dtos.Users;
 

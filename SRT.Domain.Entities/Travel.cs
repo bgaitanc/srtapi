@@ -1,4 +1,5 @@
 ﻿using SRT.Domain.Entities.Base;
+using SRT.Domain.Entities.Identity;
 
 namespace SRT.Domain.Entities;
 
@@ -18,7 +19,7 @@ public class Travel : BaseEntity
 
 public enum TravelStatus
 {
-    Completed,
+    Pending,
     OnGoing,
-    Pending
+    Completed
 }

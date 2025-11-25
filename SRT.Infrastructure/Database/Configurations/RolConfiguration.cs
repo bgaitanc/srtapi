@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SRT.Domain.Entities;
+using SRT.Domain.Entities.Identity;
 
 namespace SRT.Infrastructure.Database.Configurations;
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Npgsql.NameTranslation;
 using SRT.Domain.Entities;
 using SRT.Domain.Entities.Base;
+using SRT.Domain.Entities.Identity;
 
 namespace SRT.Infrastructure.Database;
 

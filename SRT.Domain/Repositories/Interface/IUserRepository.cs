@@ -1,4 +1,5 @@
 ﻿using SRT.Domain.Entities;
+using SRT.Domain.Entities.Identity;
 using SRT.Domain.Repositories.Interface.Base;
 
 namespace SRT.Domain.Repositories.Interface;

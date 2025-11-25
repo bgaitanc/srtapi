@@ -5,4 +5,5 @@ namespace SRT.Domain.Services.Interface;
 public interface IAuthenticationService
 {
     Task<AuthenticationResponse> GenerateToken(AuthenticationRequest request);
+    Task<AuthenticationResponse> RefreshToken(RefreshTokenRequest request);
 }

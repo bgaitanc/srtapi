@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SRT.Infrastructure.Database;
@@ -11,9 +12,11 @@ using SRT.Infrastructure.Database;
 namespace SRT.Infrastructure.Migrations
 {
     [DbContext(typeof(SrtDbContext))]
-    partial class SrtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251124193516_Add_Refresh_Token_Fields")]
+    partial class Add_Refresh_Token_Fields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace SRT.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "reservationstatus", new[] { "Pending", "Completed", "Canceled" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "travelstatus", new[] { "Pending", "OnGoing", "Completed" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "travelstatus", new[] { "Completed", "OnGoing", "Pending" });
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
@@ -99,156 +102,6 @@ namespace SRT.Infrastructure.Migrations
                             t.HasCheckConstraint("CK_Destination_Name", "TRIM(\"Name\") <> ''");
 
                             t.HasCheckConstraint("CK_Destination_StateId_uuid", "\"StateId\" <> '00000000-0000-0000-0000-000000000000'");
-                        });
-                });
-
-            modelBuilder.Entity("SRT.Domain.Entities.Identity.Rol", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Rol", "Identity", t =>
-                        {
-                            t.HasCheckConstraint("CK_Rol_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
-
-                            t.HasCheckConstraint("CK_Rol_Name", "TRIM(\"Name\") <> ''");
-                        });
-                });
-
-            modelBuilder.Entity("SRT.Domain.Entities.Identity.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("varchar(25)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("User", "Identity", t =>
-                        {
-                            t.HasCheckConstraint("CK_User_Email", "TRIM(\"Email\") <> ''");
-
-                            t.HasCheckConstraint("CK_User_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
-
-                            t.HasCheckConstraint("CK_User_Name", "TRIM(\"Name\") <> ''");
-
-                            t.HasCheckConstraint("CK_User_Password", "TRIM(\"Password\") <> ''");
-
-                            t.HasCheckConstraint("CK_User_Surname", "TRIM(\"Surname\") <> ''");
-
-                            t.HasCheckConstraint("CK_User_Username", "TRIM(\"Username\") <> ''");
-                        });
-                });
-
-            modelBuilder.Entity("SRT.Domain.Entities.Identity.UserRol", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("RolId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RolId");
-
-                    b.HasIndex("UserId", "RolId")
-                        .IsUnique();
-
-                    b.ToTable("UserRol", "Identity", t =>
-                        {
-                            t.HasCheckConstraint("CK_UserRoles_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
-
-                            t.HasCheckConstraint("CK_UserRoles_RolId_uuid", "\"RolId\" <> '00000000-0000-0000-0000-000000000000'");
-
-                            t.HasCheckConstraint("CK_UserRoles_UserId_uuid", "\"UserId\" <> '00000000-0000-0000-0000-000000000000'");
                         });
                 });
 
@@ -340,6 +193,42 @@ namespace SRT.Infrastructure.Migrations
                             t.HasCheckConstraint("CK_ReservationDetail_ReservationId_uuid", "\"ReservationId\" <> '00000000-0000-0000-0000-000000000000'");
 
                             t.HasCheckConstraint("CK_ReservationDetail_SeatNumber_uuid", "\"SeatNumber\" BETWEEN 1 AND 1000");
+                        });
+                });
+
+            modelBuilder.Entity("SRT.Domain.Entities.Rol", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Rol", "Identity", t =>
+                        {
+                            t.HasCheckConstraint("CK_Rol_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
+
+                            t.HasCheckConstraint("CK_Rol_Name", "TRIM(\"Name\") <> ''");
                         });
                 });
 
@@ -505,6 +394,120 @@ namespace SRT.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SRT.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("varchar(25)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("User", "Identity", t =>
+                        {
+                            t.HasCheckConstraint("CK_User_Email", "TRIM(\"Email\") <> ''");
+
+                            t.HasCheckConstraint("CK_User_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
+
+                            t.HasCheckConstraint("CK_User_Name", "TRIM(\"Name\") <> ''");
+
+                            t.HasCheckConstraint("CK_User_Password", "TRIM(\"Password\") <> ''");
+
+                            t.HasCheckConstraint("CK_User_Surname", "TRIM(\"Surname\") <> ''");
+
+                            t.HasCheckConstraint("CK_User_Username", "TRIM(\"Username\") <> ''");
+                        });
+                });
+
+            modelBuilder.Entity("SRT.Domain.Entities.UserRol", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RolId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RolId");
+
+                    b.HasIndex("UserId", "RolId")
+                        .IsUnique();
+
+                    b.ToTable("UserRol", "Identity", t =>
+                        {
+                            t.HasCheckConstraint("CK_UserRoles_Id_uuid", "\"Id\" <> '00000000-0000-0000-0000-000000000000'");
+
+                            t.HasCheckConstraint("CK_UserRoles_RolId_uuid", "\"RolId\" <> '00000000-0000-0000-0000-000000000000'");
+
+                            t.HasCheckConstraint("CK_UserRoles_UserId_uuid", "\"UserId\" <> '00000000-0000-0000-0000-000000000000'");
+                        });
+                });
+
             modelBuilder.Entity("SRT.Domain.Entities.Vehicle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -563,28 +566,9 @@ namespace SRT.Infrastructure.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("SRT.Domain.Entities.Identity.UserRol", b =>
-                {
-                    b.HasOne("SRT.Domain.Entities.Identity.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("RolId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.HasOne("SRT.Domain.Entities.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("Rol");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SRT.Domain.Entities.Reservation", b =>
                 {
-                    b.HasOne("SRT.Domain.Entities.Identity.User", "Client")
+                    b.HasOne("SRT.Domain.Entities.User", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.SetNull)
@@ -644,7 +628,7 @@ namespace SRT.Infrastructure.Migrations
 
             modelBuilder.Entity("SRT.Domain.Entities.Travel", b =>
                 {
-                    b.HasOne("SRT.Domain.Entities.Identity.User", "Driver")
+                    b.HasOne("SRT.Domain.Entities.User", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.SetNull)
@@ -667,6 +651,25 @@ namespace SRT.Infrastructure.Migrations
                     b.Navigation("Route");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("SRT.Domain.Entities.UserRol", b =>
+                {
+                    b.HasOne("SRT.Domain.Entities.Rol", "Rol")
+                        .WithMany()
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.HasOne("SRT.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SRT.Domain.Entities.Country", b =>
