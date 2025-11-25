@@ -1,28 +1,48 @@
-version: '3.8'
-
 services:
-  sql_server_db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sql_server_container
+  postgres:
+    image: postgres:17-alpine
+    container_name: srt_postgres_container
+    restart: unless-stopped
     ports:
-      - "1433:1433"
+      - "5432:5432"
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER:-srt_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-srt_password}
+      POSTGRES_DB: ${POSTGRES_DB:-DB_SRT}
     volumes:
-      - sqldata:/var/opt/mssql
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - srt_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-srt_user}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   srt_backend:
     container_name: srt_backend_container
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
-      ConnectionStrings__DefaultConnection: "Server=sql_server_db,1433;Database=DB_SRT;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;Encrypt=False;"
+      ConnectionStrings__DefaultConnection: "Host=${POSTGRES_HOST:-postgres};Port=5432;Database=${POSTGRES_DB:-DB_SRT};Username=${POSTGRES_USER:-srt_user};Password=${DB_PASSWORD:-srt_password};SslMode=${SSL_MODE:-Prefer}"
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      AppSettings__Secret: ${JWT_SECRET:-default_secret_key_change_in_production_minimum_32_characters}
+      AppSettings__Issuer: ${JWT_ISSUER:-https://localhost:8080}
+      AppSettings__Audience: ${JWT_AUDIENCE:-srt-api-users}
+      ExecuteMigrations: ${EXECUTE_MIGRATIONS:-false}
     depends_on:
-      - sql_server_db
+      postgres:
+        condition: service_healthy
+    networks:
+      - srt_network
+
+networks:
+  srt_network:
+    driver: bridge
 
 volumes:
-  sqldata:
+  pgdata:
