@@ -1,6 +1,6 @@
 ﻿using SRT.Domain.Entities.Base;
 
-namespace SRT.Domain.Entities;
+namespace SRT.Domain.Entities.Identity;
 
 public class UserRol : BaseEntity
 {

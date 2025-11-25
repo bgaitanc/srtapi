@@ -1,4 +1,5 @@
 ﻿using SRT.Domain.Entities;
+using SRT.Domain.Entities.Identity;
 using SRT.Domain.Models.Dtos.Auth;
 using SRT.Domain.Models.Dtos.Users;
 using SRT.Domain.Repositories.Interface;
@@ -11,6 +12,16 @@ public class UserService(IUserRepository userRepository) : IUserService
     public async Task<User?> GetUser(string username)
     {
         return await userRepository.GetUserByUsername(username);
+    }
+
+    public async Task<User?> GetById(Guid id)
+    {
+        return await userRepository.GetByIdTrackingAsync(id);
+    }
+
+    public async Task UpdateUser(User user)
+    {
+        await userRepository.UpdateAsync(user);
     }
 
     public async Task<UserInfoResponse> GetUserInfo(string username)

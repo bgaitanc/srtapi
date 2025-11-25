@@ -14,7 +14,7 @@ public class ReservationsController(
     IReservationService reservationService,
     IReservationDetailService reservationDetailService) : SrtControllerBase
 {
-    [HttpGet("detalle")]
+    [HttpGet("detail")]
     public async Task<ActionResult<GetReservationDetailResponse>> GetReservationDetailByTravel(
         [FromQuery] Guid travelId)
     {

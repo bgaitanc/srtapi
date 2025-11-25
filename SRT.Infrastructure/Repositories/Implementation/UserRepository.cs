@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SRT.Domain.Entities;
+using SRT.Domain.Entities.Identity;
 using SRT.Domain.Repositories.Interface;
 using SRT.Infrastructure.Database;
 using SRT.Infrastructure.Repositories.Implementation.Base;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SRT.Infrastructure.Database;
@@ -11,9 +12,11 @@ using SRT.Infrastructure.Database;
 namespace SRT.Infrastructure.Migrations
 {
     [DbContext(typeof(SrtDbContext))]
-    partial class SrtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251124195913_Fix_Travel_Status_Enum")]
+    partial class Fix_Travel_Status_Enum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

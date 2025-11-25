@@ -1,6 +1,6 @@
 ﻿using SRT.Domain.Entities.Base;
 
-namespace SRT.Domain.Entities;
+namespace SRT.Domain.Entities.Identity;
 
 public class User : BaseEntity
 {
@@ -15,4 +15,8 @@ public class User : BaseEntity
     public required string Email { get; set; }
 
     public string? PhoneNumber { get; set; }
+
+    public string? RefreshToken { get; set; }
+
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 }

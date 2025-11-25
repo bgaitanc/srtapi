@@ -82,7 +82,7 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 - [ ] Implementación de Roles
 - [ ] Completar documentacion de endpoints en apidog
 - [ ] Actualizar documentación en Readme considerando la migración
-- [ ] Refresh tokens
+- [X] Refresh tokens
 - [ ] Centralizar y completar mensajes de información y error de endpoints
 - [ ] Actualizar docker compose
 - [X] Registro y Login de Usuarios
@@ -99,3 +99,4 @@ Para generar el secret de token JWT se puede utilizar la herramienta **openssl**
 - [ ] CRUD Pagos
 - [ ] Lógica de reservas - WS
 - [ ] Update y Eliminación / reactivación Usuarios
+- [ ] Actualizar peticiones y manejo de refreshToken en SRT.http

@@ -14,4 +14,10 @@ public class AuthenticationController(IAuthenticationService authenticationServi
     {
         return await ExecuteServiceAsync(async () => await authenticationService.GenerateToken(request));
     }
+    
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult<AuthenticationResponse>> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        return await ExecuteServiceAsync(async () => await authenticationService.RefreshToken(request));
+    }
 }
