@@ -13,6 +13,7 @@ public class ReservationService(
 {
     public async Task<GetReservationInfoResponse> CreateReservation(CreateReservationRequest request)
     {
+        // Create a new reservation
         var newReservation = new Reservation
         {
             TravelId = request.TravelId,
