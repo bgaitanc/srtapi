@@ -20,6 +20,7 @@ public static class DependencyConfigurations
         services.AddScoped<ITravelService, TravelService>();
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IReservationDetailService, ReservationDetailService>();
+        services.AddScoped<IRoleService, RoleService>();
     }
 
     public static void ConfigureAppRepositories(this IServiceCollection services)
@@ -34,5 +35,6 @@ public static class DependencyConfigurations
         services.AddScoped<ITravelRepository, TravelRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IReservationDetailRepository, ReservationDetailRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
     }
 }

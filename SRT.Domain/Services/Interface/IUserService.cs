@@ -12,4 +12,8 @@ public interface IUserService
     Task UpdateUser(User user);
     Task<UserInfoResponse> GetUserInfo(string username);
     Task<RegisterUserResponse> Register(RegisterUserRequest request);
+    Task AssignRoleToUser(Guid userId, Guid roleId);
+    Task RemoveRoleFromUser(Guid userId, Guid roleId);
+    Task<IEnumerable<string>> GetUserRoles(Guid userId);
+    Task<IEnumerable<UserInfoResponse>> GetAllUsers();
 }

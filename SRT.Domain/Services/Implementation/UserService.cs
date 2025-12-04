@@ -27,7 +27,7 @@ public class UserService(IUserRepository userRepository) : IUserService
     public async Task<UserInfoResponse> GetUserInfo(string username)
     {
         var user = await GetUser(username);
-        return new UserInfoResponse(user!);
+        return UserInfoResponseMapper.FromUser(user!);
     }
 
     public async Task<RegisterUserResponse> Register(RegisterUserRequest request)
@@ -63,5 +63,26 @@ public class UserService(IUserRepository userRepository) : IUserService
         }
 
         throw new Exception("Correo ya registrado");
+    }
+    
+    public async Task AssignRoleToUser(Guid userId, Guid roleId)
+    {
+        await userRepository.AssignRoleToUser(userId, roleId);
+    }
+
+    public async Task RemoveRoleFromUser(Guid userId, Guid roleId)
+    {
+        await userRepository.RemoveRoleFromUser(userId, roleId);
+    }
+
+    public async Task<IEnumerable<string>> GetUserRoles(Guid userId)
+    {
+        return await userRepository.GetUserRoles(userId);
+    }
+
+    public async Task<IEnumerable<UserInfoResponse>> GetAllUsers()
+    {
+        var users = await userRepository.GetAllAsync();
+        return users.Select(UserInfoResponseMapper.FromUser);
     }
 }
