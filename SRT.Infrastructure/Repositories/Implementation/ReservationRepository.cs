@@ -29,4 +29,12 @@ public class ReservationRepository(SrtDbContext context) : Repository<Reservatio
                 }).ToList()
             }).ToListAsync();
     }
+
+    public async Task<IEnumerable<Reservation>> GetReservationsByTravelIds(IEnumerable<Guid> travelIds)
+    {
+        return await GetAll()
+            .Include(x => x.ReservationDetails)
+            .Where(x => travelIds.Contains(x.TravelId))
+            .ToListAsync();
+    }
 }

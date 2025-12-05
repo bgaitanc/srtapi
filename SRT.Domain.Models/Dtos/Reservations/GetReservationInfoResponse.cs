@@ -12,4 +12,6 @@ public class GetReservationInfoResponse
     public GetTravelInfoResponse Travel { get; set; }
     public RouteInfo Route { get; set; }
     public decimal Total { get; set; }
+    public VehicleInfo Vehicle { get; set; }
+    public DriverInfo Driver { get; set; }
 }

@@ -76,8 +76,64 @@ public class ReservationService(
                     DepartureDate = travel.DepartureDate
                 },
                 Route = travel.Route,
-                Total = travel.Price * x.Detail.Count
+                Total = travel.Price * x.Detail.Count,
+                Vehicle = travel.Vehicle == null ? null : new VehicleInfo
+                {
+                    RegistrationPlate = travel.Vehicle.RegistrationPlate,
+                    Model = travel.Vehicle.Model,
+                    Capacity = travel.Vehicle.Capacity
+                },
+                Driver = travel.Driver == null ? null : new DriverInfo
+                {
+                    Name = travel.Driver.Name,
+                    Surname = travel.Driver.Surname
+                }
             };
         });
+    }
+
+    public async Task<ReservationValidationResult> ValidateReservationAsync(ValidateReservationRequest request)
+    {
+        var reservation = reservationRepository.GetAll()
+            .Where(r => r.Id == request.ReservationId)
+            .Select(r => new Reservation
+            {
+                Id = r.Id,
+                TravelId = r.TravelId,
+                ClientId = r.ClientId,
+                ReservationDate = r.ReservationDate,
+                Status = r.Status,
+                Travel = r.Travel,
+                Client = r.Client,
+                ReservationDetails = r.ReservationDetails
+            })
+            .FirstOrDefault();
+
+        // Map reservation to ReservationValidationResult
+        if (reservation == null)
+        {
+            return new ReservationValidationResult
+            {
+                IsValid = false,
+                ReservationId = request.ReservationId,
+                PassengerName = string.Empty,
+                PassengerSurname = string.Empty,
+                SeatNumbers = new List<short>(),
+                Origin = string.Empty,
+                Destination = string.Empty,
+                DepartureDate = DateTime.MinValue
+            };
+        }
+        return new ReservationValidationResult
+        {
+            IsValid = true,
+            ReservationId = reservation.Id,
+            PassengerName = reservation.Client?.Name ?? string.Empty,
+            PassengerSurname = reservation.Client?.Surname ?? string.Empty,
+            SeatNumbers = reservation.ReservationDetails?.Select(d => d.SeatNumber).ToList() ?? new List<short>(),
+            Origin = reservation.Travel?.Route?.OriginDestination?.Name ?? string.Empty,
+            Destination = reservation.Travel?.Route?.FinalDestination?.Name ?? string.Empty,
+            DepartureDate = reservation.Travel?.DepartureDate ?? DateTime.MinValue
+        };
     }
 }

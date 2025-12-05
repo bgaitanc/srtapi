@@ -21,6 +21,7 @@ public static class DependencyConfigurations
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IReservationDetailService, ReservationDetailService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IDriverTripService, DriverTripService>();
     }
 
     public static void ConfigureAppRepositories(this IServiceCollection services)

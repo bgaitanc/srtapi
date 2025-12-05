@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using SRT.Controllers.Base;
 using SRT.Domain.Models.Dtos.Reservations;
 using SRT.Domain.Services.Interface;
+using SRT.Domain.Utils.Exceptions;
+using SRT.Domain.Models.Helpers;
 
 namespace SRT.Controllers;
 
@@ -35,5 +37,22 @@ public class ReservationsController(
     {
         return await ExecuteServiceAsync(async () => await reservationService.CreateReservation(request),
             HttpStatusCode.Created);
+    }
+
+    [HttpPost("validate")]
+    public async Task<ActionResult<ValidateReservationResponse>> ValidateReservation([FromBody] ValidateReservationRequest request)
+    {
+        return await ExecuteServiceAsync(async () =>
+        {
+            try
+            {
+                var result = await reservationService.ValidateReservationAsync(request);
+                return result.ToResponse();
+            }
+            catch (SrtException ex)
+            {
+                throw new SrtException(HttpStatusCode.BadRequest, "Error validating reservation");
+            }
+        });
     }
 }
