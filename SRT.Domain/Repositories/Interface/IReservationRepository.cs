@@ -7,4 +7,5 @@ namespace SRT.Domain.Repositories.Interface;
 public interface IReservationRepository : IRepository<Reservation>
 {
     Task<IEnumerable<GetReservationResponse>> GetReservationsByUserId(Guid userId);
+    Task<IEnumerable<Reservation>> GetReservationsByTravelIds(IEnumerable<Guid> travelIds);
 }

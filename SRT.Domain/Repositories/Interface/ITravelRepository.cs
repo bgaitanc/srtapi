@@ -8,4 +8,5 @@ public interface ITravelRepository : IRepository<Travel>
 {
     Task<IEnumerable<GetTravelResponse>> GetTravels(Guid? travelId = null);
     Task<GetTravelResponse?> GetTravelById(Guid travelId);
+    IQueryable<Travel> GetAllWithDetails();
 }

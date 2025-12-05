@@ -13,6 +13,9 @@ public class TravelRepository(SrtDbContext context) : Repository<Travel>(context
     {
         var list = GetAll()
             .Include(x => x.Route)
+            .ThenInclude(r => r.OriginDestination)
+            .Include(x => x.Route)
+            .ThenInclude(r => r.FinalDestination)
             .Include(x => x.Vehicle)
             .Include(x => x.Driver);
 
@@ -56,5 +59,14 @@ public class TravelRepository(SrtDbContext context) : Repository<Travel>(context
     {
         var result = await GetTravels(travelId);
         return result.FirstOrDefault();
+    }
+    public IQueryable<Travel> GetAllWithDetails()
+    {
+        return context.Set<Travel>()
+            .Include(t => t.Route)
+            .ThenInclude(r => r.OriginDestination)
+            .Include(t => t.Route)
+            .ThenInclude(r => r.FinalDestination)
+            .Include(t => t.Vehicle);
     }
 }

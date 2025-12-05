@@ -16,4 +16,5 @@ public interface IUserService
     Task RemoveRoleFromUser(Guid userId, Guid roleId);
     Task<IEnumerable<string>> GetUserRoles(Guid userId);
     Task<IEnumerable<UserInfoResponse>> GetAllUsers();
+    Task<UserInfoResponse> UpdateUserProfile(Guid userId, UpdateUserProfileRequest request);
 }
