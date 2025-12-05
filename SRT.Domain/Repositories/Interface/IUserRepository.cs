@@ -8,4 +8,8 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User?> GetUserByUsername(string username);
     Task<User?> GetUserByUsernameAndEmail(string username, string email);
+    Task AssignRoleToUser(Guid userId, Guid roleId);
+    Task RemoveRoleFromUser(Guid userId, Guid roleId);
+    Task<IEnumerable<string>> GetUserRoles(Guid userId);
+    Task<IEnumerable<User>> GetAllAsync();
 }

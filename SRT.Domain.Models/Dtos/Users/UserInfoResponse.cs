@@ -3,12 +3,13 @@ using SRT.Domain.Entities.Identity;
 
 namespace SRT.Domain.Models.Dtos.Users;
 
-public class UserInfoResponse(User user)
+public class UserInfoResponse
 {
-    public Guid Id { get; set; } = user.Id;
-    public string Name { get; set; } = user.Name;
-    public string Surname { get; set; } = user.Surname;
-    public string Username { get; set; } = user.Username;
-    public string Email { get; set; } = user.Email;
-    public string? PhoneNumber { get; set; } = user.PhoneNumber;
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string? PhoneNumber { get; set; }
+    public List<string> Roles { get; set; } = new();
 }

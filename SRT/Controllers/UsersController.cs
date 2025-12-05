@@ -28,4 +28,34 @@ public class UsersController(IUserService userService) : SrtControllerBase
 
         return (await ExecuteServiceAsync(async () => await userService.GetUserInfo(user!)))!;
     }
+
+    [HttpPost("assign-role")]
+    public async Task<ActionResult<bool>> AssignRole([FromBody] AssignUserRoleRequest request)
+    {
+        return await ExecuteServiceAsync(async () => {
+            await userService.AssignRoleToUser(request.UserId, request.RoleId);
+            return true;
+        });
+    }
+
+    [HttpPost("remove-role")]
+    public async Task<ActionResult<bool>> RemoveRole([FromBody] RemoveUserRoleRequest request)
+    {
+        return await ExecuteServiceAsync(async () => {
+            await userService.RemoveRoleFromUser(request.UserId, request.RoleId);
+            return true;
+        });
+    }
+
+    [HttpGet("{userId}/roles")]
+    public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(Guid userId)
+    {
+        return await ExecuteServiceAsync(async () => await userService.GetUserRoles(userId));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserInfoResponse>>> GetAll()
+    {
+        return await ExecuteServiceAsync(async () => await userService.GetAllUsers());
+    }
 }
