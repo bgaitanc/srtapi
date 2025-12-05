@@ -12,7 +12,8 @@ public class ReservationRepository(SrtDbContext context) : Repository<Reservatio
     public async Task<IEnumerable<GetReservationResponse>> GetReservationsByUserId(Guid userId)
     {
         var list = GetAll()
-            .Include(x => x.Travel);
+            .Include(x => x.Travel)
+            .Include(x => x.ReservationDetails);
 
         return await list.Where(x => x.ClientId == userId)
             .Select(x => new GetReservationResponse
@@ -20,7 +21,12 @@ public class ReservationRepository(SrtDbContext context) : Repository<Reservatio
                 ReservationId = x.Id,
                 TravelId = x.TravelId,
                 ReservationDate = x.ReservationDate,
-                Detail = x.ReservationDetails.Select(y => y.SeatNumber).ToList()
+                Detail = x.ReservationDetails.Select(d => new CreateReservationDetailResponse
+                {
+                    ReservationDetailId = d.Id,
+                    ReservationId = d.ReservationId,
+                    SeatNumber = d.SeatNumber
+                }).ToList()
             }).ToListAsync();
     }
 }

@@ -68,10 +68,7 @@ public class ReservationService(
                 ReservationId = x.ReservationId,
                 TravelId = x.TravelId,
                 ReservationDate = x.ReservationDate,
-                Details = x.Detail.Select(z => new CreateReservationDetailResponse
-                {
-                    SeatNumber = z
-                }),
+                Details = x.Detail,
                 Travel = new GetTravelInfoResponse
                 {
                     Price = travel.Price,
