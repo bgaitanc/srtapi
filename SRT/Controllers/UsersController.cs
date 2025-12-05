@@ -58,4 +58,14 @@ public class UsersController(IUserService userService) : SrtControllerBase
     {
         return await ExecuteServiceAsync(async () => await userService.GetAllUsers());
     }
+
+    [HttpPut("profile")]
+    public async Task<ActionResult<UserInfoResponse>> UpdateProfile([FromBody] UpdateUserProfileRequest request)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim == null || !Guid.TryParse(userIdClaim, out var userId))
+            return Unauthorized();
+
+        return await ExecuteServiceAsync(async () => await userService.UpdateUserProfile(userId, request));
+    }
 }

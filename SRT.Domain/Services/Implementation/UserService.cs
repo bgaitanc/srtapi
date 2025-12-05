@@ -85,4 +85,19 @@ public class UserService(IUserRepository userRepository) : IUserService
         var users = await userRepository.GetAllAsync();
         return users.Select(UserInfoResponseMapper.FromUser);
     }
+
+    public async Task<UserInfoResponse> UpdateUserProfile(Guid userId, UpdateUserProfileRequest request)
+    {
+        var user = await userRepository.GetByIdTrackingAsync(userId);
+        if (user == null)
+            throw new Exception("Usuario no encontrado");
+
+        user.Name = request.Name;
+        user.Surname = request.Surname;
+        user.Email = request.Email;
+        user.PhoneNumber = request.PhoneNumber;
+
+        await userRepository.UpdateAsync(user);
+        return UserInfoResponseMapper.FromUser(user);
+    }
 }
