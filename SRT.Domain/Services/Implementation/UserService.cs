@@ -46,7 +46,8 @@ public class UserService(IUserRepository userRepository) : IUserService
                 Surname = request.Surname,
                 Username = request.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Email = request.Email
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
             };
 
             var result = await userRepository.CreateAsync(newUser);
