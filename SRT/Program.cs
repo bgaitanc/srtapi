@@ -66,7 +66,7 @@ builder.Services.AddCors(options =>
             }
             else
             {
-                b.WithOrigins("http://localhost:3000")
+                b.WithOrigins("https://srtbackoffice.onrender.com")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
